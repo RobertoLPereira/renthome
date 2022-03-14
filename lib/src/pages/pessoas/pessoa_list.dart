@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uno/uno.dart';
 
-class PessoaList extends StatefulWidget {
+class PessoaListPage extends StatefulWidget {
   static const routeName = '/pessoas';
 
-  //final _back = PessoaListBack();
-  const PessoaList({Key key}) : super(key: key);
+  //final _back = PessoaListPageBack();
+  const PessoaListPage({Key key}) : super(key: key);
 
   @override
-  State<PessoaList> createState() => _PessoaListState();
+  State<PessoaListPage> createState() => _PessoaListPageState();
 }
 
 class Debouncer {
@@ -37,8 +37,9 @@ class Debouncer {
   }
 }
 
-class _PessoaListState extends State<PessoaList> {
+class _PessoaListPageState extends State<PessoaListPage> {
   final store = PessoaStore(PessoaService(Uno()));
+
   final _debouncer = Debouncer(milliseconds: 500);
 
   List<Pessoas> pessoa = [];
@@ -191,6 +192,7 @@ class _PessoaListState extends State<PessoaList> {
                   itemCount: state.pessoas.length,
                   itemBuilder: (_, index) {
                     final pessoa = state.pessoas[index];
+                    print(pessoa);
                     String telefone;
                     if (pessoa.telefone == null) {
                       telefone = 'Não informado';
@@ -203,7 +205,7 @@ class _PessoaListState extends State<PessoaList> {
                       onTap: () {},
                       subtitle: Text(telefone),
                       trailing: Container(
-                        width: 120,
+                        width: 144,
                         child: Row(
                           children: [
                             iconEditButton(() {

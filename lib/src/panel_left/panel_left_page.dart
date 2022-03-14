@@ -42,8 +42,8 @@ class _PanelLeftPageState extends State<PanelLeftPage> {
     this.fetchDashBoard();
     print('painel');
     //wtotal = ctr.total;
-    print(wtotal.toString());
-    print('painel 2');
+    // print(wtotal.toString());
+    //print('painel 2');
   }
 
   fetchDashBoard() async {

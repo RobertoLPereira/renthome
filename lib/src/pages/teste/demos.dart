@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:renthome/app/view/apoio/categoria/categoria_de_imoveis_details.dart';
 import 'package:renthome/app/view/apoio/categoria/categoria_de_imoveis_form.dart';
 import 'package:renthome/app/view/apoio/categoria/teste/categoria_de_imoveis_form_list.dart';
@@ -21,6 +23,7 @@ import 'package:renthome/app/view/pessoas/pessoas_list.dart';
 import 'package:renthome/comboAninhado/views/home_page.dart';
 import 'package:renthome/src/pages/imovel/form_imovel.dart';
 import 'package:renthome/src/pages/imovel/form_leituraunidade.dart';
+import 'package:renthome/src/pages/pessoas/pessoa_filter.dart';
 import 'package:renthome/src/pages/pessoas/pessoa_list.dart';
 import '../../../app/view/apoio/status/status_details.dart';
 import '../../../app/view/apoio/status/status_form.dart';
@@ -110,7 +113,7 @@ final demos = [
   Demo(
     name: 'Contatos',
     route: '/Contatos',
-    builder: (context) => PessoaList(),
+    builder: (context) => PessoaListPage(),
   ),
   Demo(
     name: 'Contatos-Form',

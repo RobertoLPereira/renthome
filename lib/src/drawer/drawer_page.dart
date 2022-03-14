@@ -24,6 +24,7 @@ List<ButtonsInfo> _buttonNames = [
   ButtonsInfo(title: "Leitura Água", icon: Icons.water),
   ButtonsInfo(title: "Leitura Luz", icon: Icons.light),
   ButtonsInfo(title: "Pessoas", icon: Icons.person),
+  ButtonsInfo(title: "Contatos", icon: Icons.person),
   ButtonsInfo(title: "Imoveis", icon: Icons.home_filled),
   ButtonsInfo(title: "Unidade", icon: Icons.home_mini),
   ButtonsInfo(title: "Pagamentos", icon: Icons.monetization_on),
@@ -39,6 +40,7 @@ List wrota = [
   '/Leituraaguaunidade',
   '/Leituraluzunidade',
   '/Pessoas',
+  '/Contatos',
   '/Imoveis',
   '/Unidades',
   '/PagamentosPessoa',
@@ -47,6 +49,7 @@ List wrota = [
   '/FaixaConsumo',
   '/NaturezaRelac',
   '/ComboBox',
+  '/Cidades',
 ];
 
 class DrawerPage extends StatefulWidget {

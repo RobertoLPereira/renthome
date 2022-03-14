@@ -14,7 +14,7 @@ class _PessoastListState extends State<PessoastList> {
   final _back = PessoasListBack();
   var pg = "0";
   var ativo = 1;
-  var proprietario;
+  var proprietario = false;
   CircleAvatar circleAvatar(String url) {
     //print('url = $url');
     if (url == null) {
@@ -167,24 +167,30 @@ class _PessoastListState extends State<PessoastList> {
                   return CircularProgressIndicator();
                 } else {
                   List<PessoasWrap> lista = futuro.data;
+                  //print(lista);
                   return ListView.builder(
                     itemCount: lista.length,
                     itemBuilder: (context, i) {
                       var contato = lista[i];
-                      if (contato.proprietario == null) {
-                        proprietario = false;
-                      } else {
-                        proprietario = true;
+                      //print('contato =$contato');
+                      if (contato != null) {
+                        if (contato.proprietario == null) {
+                          proprietario = false;
+                        } else {
+                          proprietario = true;
+                        }
+                        if (contato.telefone == null) {
+                          contato.telefone = 'Não Informado';
+                        }
+                        if (contato.pago == null) {
+                          pg = 0 as String;
+                        } else {
+                          pg = contato.pago;
+                        }
+                        ativo = contato.status;
                       }
-                      if (contato.telefone == null) {
-                        contato.telefone = 'Não Informado';
-                      }
-                      if (contato.pago == null) {
-                        pg = 0 as String;
-                      } else {
-                        pg = contato.pago;
-                      }
-                      ativo = contato.status;
+                      ;
+
                       if (contato.idcontrato != null) {
                         return ListTile(
                           leading: circleAvatar(contato.urlAvatar),

@@ -6,13 +6,15 @@ class PessoaService {
 
   PessoaService(this.uno);
   Future<List<Pessoas>> fetchPessoas() async {
-    final response = await uno.get('https://apialugueis.herokuapp.com/Pessoas');
+    //final response = await uno.get('https://apialugueis.herokuapp.com/Pessoas');
+    var response = await uno.get(
+        'https://apialugueis.herokuapp.com/Consultar/select * from "vw_listacontatosWrap"');
     final lista = response.data as List;
     final listaPessoas = lista.map((e) => Pessoas.fromMap(e)).toList();
     return listaPessoas;
   }
 
-  static Future<List<Pessoas>> getPessoas() async {
+  Future<List<Pessoas>> getPessoas() async {
     Uno uno;
     final response = await uno.get('https://apialugueis.herokuapp.com/Pessoas');
     final lista = response.data as List;

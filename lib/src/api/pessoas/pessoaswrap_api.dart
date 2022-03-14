@@ -9,12 +9,13 @@ import 'package:uno/uno.dart';
 
 class PessoasWrapApi implements PessoasWrapDAO {
   final uriREST = Uri.parse(
-      'https://apialugueis.herokuapp.com/Consultar/' + vw_listacontatosWrap);
+      'https://apialugueis.herokuapp.com/Consultar/select * from  "vw_listacontatosWrap"');
 
   @override
   Future<List<PessoasWrap>> find() async {
     var resposta = await http.get(uriREST);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
+    //print(resposta.body);
     Iterable listDart = json.decode(resposta.body);
     var listPessoasWrap = List<PessoasWrap>.from(listDart.map((json) =>
         PessoasWrap(
@@ -48,8 +49,9 @@ class PessoasWrapApi implements PessoasWrapDAO {
   PessoasWrapApi(this.uno);
   Future<List<PessoasWrap>> fetchPessoasWrap() async {
     final response = await uno.get(
-        'https://apialugueis.herokuapp.com/Consultar/$vw_listacontatosWrap');
+        'https://apialugueis.herokuapp.com/Consultar/ select * from  "vw_listacontatosWrap"');
     final lista = response.data as List;
+    print(response.data);
     final listaPessas = lista.map((e) => PessoasWrap.fromMap(e)).toList();
     return listaPessas;
   }
@@ -71,15 +73,12 @@ class PessoasWrapApi implements PessoasWrapDAO {
     //print(pessoasWrap.idpessoa);
     int statusCode = 0;
     var uri = Uri.parse('https://apialugueis.herokuapp.com/Pessoas');
-    print(uri);
     if (pessoasWrap.idpessoa == null) {
       //print(pessoasWrapJson);
       var resposta =
           await http.post(uri, headers: headers, body: pessoasWrapJson);
       statusCode = resposta.statusCode;
     } else {
-      print('vou atualizar pessoa');
-      print(pessoasWrap.idpessoa);
       var resposta =
           await http.put(uri, headers: headers, body: pessoasWrapJson);
       statusCode = resposta.statusCode;

@@ -133,37 +133,32 @@ class PieChart2State extends State {
                     emdia: map['emdia']));
               }
               ctr.atualiza_valores(wdash);
-              ctr.alvencidos = (wdash[0].vencidos -
-                  wdash[0].pagosnovencimento -
-                  wdash[0].pagosematraso);
-              //print('chamada');
-              //print('$ctr.alvencidos.value');
-              ctr.pgvecto =
-                  ((wdash[0].pagosnovencimento / wdash[0].valortotalcontrato) *
-                      100);
-              ctr.pctatraso =
-                  ((wdash[0].pagosematraso / wdash[0].valortotalcontrato) * 100)
-                      .roundToDouble();
+              var wsalvencidos = (wdash[0].valortotalcontrato - wdash[0].emdia);
+              wsalvencidos = (wsalvencidos / wdash[0].valortotalcontrato) * 100;
+              alvencidos = ctr.alvencidos;
+
               ctr.pctpgemdia =
                   ((wdash[0].emdia / wdash[0].valortotalcontrato) * 100)
                       .roundToDouble();
               ctr.pctalemdia =
-                  ((wdash[0].pagosnovencimento / wdash[0].valortotalcontrato) *
-                          100)
-                      .roundToDouble();
-              ctr.alvencidos =
-                  ((ctr.alvencidos / wdash[0].valortotalcontrato) * 100)
-                      .roundToDouble();
-              pctatraso = ctr.pctatraso;
-              pctpgemdia = ctr.pctpgemdia;
-              pctalemdia = ctr.pctalemdia;
-              alvencidos = ctr.alvencidos;
-              pgvecto = ctr.pgvecto;
+                  ((wdash[0].pagosnovencimento / wdash[0].valortotalcontrato)
+                          .roundToDouble() *
+                      100);
+              ctr.pgvecto = ((wdash[0].pagosnovencimento / ctr.pctpgemdia)
+                  .roundToDouble());
+              ctr.pctatraso =
+                  ((wdash[0].pagosematraso / ctr.pctpgemdia).roundToDouble());
+              pctatraso = ctr.pctatraso.ceilToDouble();
+              pctpgemdia = ctr.pctpgemdia.ceilToDouble();
+              pctalemdia = ctr.pctalemdia.ceilToDouble();
+              alvencidos = wsalvencidos.ceilToDouble();
+              pgvecto = ctr.pgvecto.ceilToDouble();
 
               dashboard = resultado;
               isLoading = false;
 
-              //print('$pctatraso $pctpgemdia $pctalemdia $alvencidos');
+              //  print(
+              //    'pctatraso:$pctatraso,pctpgemdia: $pctpgemdia,pctalemdia: $pctalemdia,alvencidos: $alvencidos');
             });
           } else {
             dashboard = [];

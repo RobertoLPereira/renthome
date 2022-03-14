@@ -1,13 +1,15 @@
 import 'dart:async';
-import 'package:renthome/src/models/pessoas/pessoas.dart';
-import 'package:renthome/src/services/pessoas/pessoas_service.dart';
+import 'package:renthome/src/store/pessoas_store.dart';
+import 'package:uno/uno.dart';
+
+import '../../models/pessoas/pessoas.dart';
+import '../../services/pessoas/pessoas_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PessoaFilter extends StatefulWidget {
+  const PessoaFilter({Key key}) : super(key: key);
   static const routeName = '/pessoaoria-filter';
-
-  PessoaFilter() : super();
 
   final String title = "Pessoas Cadastradas";
 
@@ -35,27 +37,29 @@ class Debouncer {
 }
 
 class PessoaFilterState extends State<PessoaFilter> {
-  //
+  final store = PessoaStore(PessoaService(Uno()));
   final _debouncer = Debouncer(milliseconds: 500);
   List<Pessoas> pessoa = [];
   List<Pessoas> filteredpessoa = [];
-
-  @override
-  Future<void> initState() async {
-    super.initState();
-    PessoaService.getPessoas().then((value) {
-      setState(() {
-        pessoa = value;
-        filteredpessoa = pessoa;
-      });
-    });
-  }
-
   CircleAvatar circleAvatar(String url) {
     url = url.replaceFirst('https', 'hrrp');
     return (Uri.tryParse(url).isAbsolute)
         ? CircleAvatar(backgroundImage: NetworkImage(url))
         : CircleAvatar(child: Icon(Icons.person));
+  }
+
+  @override
+  void initState() async {
+    super.initState();
+    /*WidgetsBinding.instance?.addPostFrameCallback((_) {
+      context.read<PessoaStore>().fetchPessoas();
+    });*/
+    await store.getPessoas().then((value) {
+      setState(() {
+        pessoa = value;
+        filteredpessoa = pessoa;
+      });
+    });
   }
 
   @override
