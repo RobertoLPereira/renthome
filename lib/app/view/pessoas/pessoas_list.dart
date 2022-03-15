@@ -2,6 +2,7 @@ import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 
 import 'pessoas_list_back.dart';
 
@@ -166,7 +167,7 @@ class _PessoastListState extends State<PessoastList> {
                 if (!futuro.hasData) {
                   return CircularProgressIndicator();
                 } else {
-                  List<PessoasWrap> lista = futuro.data;
+                  List<WrapPessoas> lista = futuro.data;
                   //print(lista);
                   return ListView.builder(
                     itemCount: lista.length,
@@ -196,7 +197,7 @@ class _PessoastListState extends State<PessoastList> {
                           leading: circleAvatar(contato.urlAvatar),
                           title: Text(contato.nome),
                           onTap: () {
-                            _back.goToDetails(context, contato);
+                            _back.goToDetails(context, contato as PessoasWrap);
                           },
                           subtitle: Text(contato.telefone),
                           trailing: Container(
@@ -204,13 +205,16 @@ class _PessoastListState extends State<PessoastList> {
                             child: Row(
                               children: [
                                 iconEditButton(() {
-                                  _back.goToForm(context, contato);
+                                  _back.goToForm(
+                                      context, contato as PessoasWrap);
                                 }),
                                 iconPagtoButton(() {
                                   if (int.parse(contato.pago) > 0) {
-                                    _back.goToListaPagamentos(context, contato);
+                                    _back.goToListaPagamentos(
+                                        context, contato as PessoasWrap);
                                   } else {
-                                    _back.goToFormPagto(context, contato);
+                                    _back.goToFormPagto(
+                                        context, contato as PessoasWrap);
                                   }
                                 }),
                                 iconDelAtivButton(() {
@@ -221,7 +225,8 @@ class _PessoastListState extends State<PessoastList> {
                                   }
                                 }),
                                 iconListarPgButton(() {
-                                  _back.goToListaPagamentos(context, contato);
+                                  _back.goToListaPagamentos(
+                                      context, contato as PessoasWrap);
                                 }),
                               ],
                             ),
@@ -232,7 +237,7 @@ class _PessoastListState extends State<PessoastList> {
                           leading: circleAvatar(contato.urlAvatar),
                           title: Text(contato.nome),
                           onTap: () {
-                            _back.goToDetails(context, contato);
+                            _back.goToDetails(context, contato as PessoasWrap);
                           },
                           subtitle: Text(contato.telefone),
                           trailing: Container(
@@ -240,10 +245,12 @@ class _PessoastListState extends State<PessoastList> {
                             child: Row(
                               children: [
                                 iconEditButton(() {
-                                  _back.goToForm(context, contato);
+                                  _back.goToForm(
+                                      context, contato as PessoasWrap);
                                 }),
                                 iconImovelButton(() {
-                                  _back.goToImovel(context, contato);
+                                  _back.goToImovel(
+                                      context, contato as PessoasWrap);
                                 })
                               ],
                             ),
@@ -254,7 +261,7 @@ class _PessoastListState extends State<PessoastList> {
                           leading: circleAvatar(contato.urlAvatar),
                           title: Text(contato.nome),
                           onTap: () {
-                            _back.goToDetails(context, contato);
+                            _back.goToDetails(context, contato as PessoasWrap);
                           },
                           subtitle: Text(contato.telefone),
                           trailing: Container(
@@ -262,7 +269,8 @@ class _PessoastListState extends State<PessoastList> {
                             child: Row(
                               children: [
                                 iconEditButton(() {
-                                  _back.goToForm(context, contato);
+                                  _back.goToForm(
+                                      context, contato as PessoasWrap);
                                 }),
                                 iconDelAtivButton(() {
                                   _back.remove(contato.idpessoa, context);

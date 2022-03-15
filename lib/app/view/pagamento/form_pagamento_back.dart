@@ -29,7 +29,7 @@ class FormPagamentoBack {
     var pag = Pagamentos(
       idpagamento: null,
       datapagamento: dtpgto,
-      valorpago: pessoa.valor,
+      valorpago: pessoa.valor as double,
       juros: 0.00,
       desconto: 0.00,
       idcontrato: pessoa.idcontrato,

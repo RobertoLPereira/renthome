@@ -3,12 +3,17 @@ import 'package:renthome/app/domain/interfaces/pessoas_wrap_dao.dart';
 import 'package:renthome/src/models/pagamento/pagamentoPessoa.dart';
 import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 
 class PessoasWrapService {
   var _dao = GetIt.I.get<PessoasWrapDAO>();
 // tem que salvar um contato, ter a possibilidade de alterar e excluir e listar todos os contatos
   Future<List<PessoasWrap>> find() {
     return _dao.find();
+  }
+
+  Future<List<WrapPessoas>> wrapfind() {
+    return _dao.wrapfind();
   }
 
   Future<List<PagamentosPessoa>> listar(int idpessoa) {

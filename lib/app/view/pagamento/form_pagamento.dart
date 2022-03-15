@@ -43,7 +43,7 @@ class _FormPagamentoState extends State<FormPagamento> {
     //var mask = MaskTextInputFormatter(mask: '###,##');
     return TextFormField(
         validator: back.validateValorPagar,
-        onSaved: (newValue) => back.pessoa.valor = double.parse(newValue),
+        onSaved: (newValue) => back.pessoa.valor = newValue as int,
         initialValue: back.pessoa.valor.toString(),
         //inputFormatters: [mask],
         keyboardType: TextInputType.numberWithOptions(decimal: true),

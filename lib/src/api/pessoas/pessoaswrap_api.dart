@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:renthome/app/domain/interfaces/pessoas_wrap_dao.dart';
 import 'package:renthome/src/models/pagamento/pagamentoPessoa.dart';
 import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'package:http/http.dart' as http;
 import 'package:uno/uno.dart';
@@ -17,30 +18,39 @@ class PessoasWrapApi implements PessoasWrapDAO {
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
     print(resposta.body);
     Iterable listDart = json.decode(resposta.body);
-    var listPessoasWrap = List<PessoasWrap>.from(listDart.map((json) => PessoasWrap(
-        idcontrato: int.parse(json['idcontrato']),
-        /*idunidadeimovel: json['idunidadeimovel'],
+    var listPessoasWrap = List<PessoasWrap>.from(listDart.map((json) =>
+        PessoasWrap(
+            idcontrato: int.parse(json['idcontrato']),
+            idunidadeimovel: json['idunidadeimovel'],
             idlocador: json['idlocador'],
             idlocatario: json['idlocatario'],
             diavencimento: json['diavencimento'],
-            datacontrato: json['datacontrato'],*/
-        status: int.parse(json['status']),
-        //validadecontrato: json['validadecontrato'],
-        valor: double.parse(json['valor']),
-        //taxacondominio: json['taxacondominio'],
-        //valordecaucao: json['valordecaucao'],
-        idpessoa: json['idpessoa'],
-        nome: json['nome'],
-        telefone: json['telefone'],
-        proprietario: json['proprietario'],
-        //cadastradoem: json['cadastradoem'],
-        urlAvatar: json['url_avatar'],
-        //unidade: json['unidade'],
-        //imovel: json['imovel'],
-        enddereco: json['enddereco'],
-        pago: json['pago'])));
+            datacontrato: json['datacontrato'],
+            status: int.parse(json['status']),
+            validadecontrato: json['validadecontrato'],
+            valor: json['valor'],
+            taxacondominio: json['taxacondominio'],
+            valordecaucao: json['valordecaucao'],
+            idpessoa: json['idpessoa'],
+            nome: json['nome'],
+            telefone: json['telefone'],
+            proprietario: json['proprietario'],
+            cadastradoem: json['cadastradoem'],
+            urlAvatar: json['url_avatar'],
+            unidade: json['unidade'],
+            imovel: json['imovel'],
+            enddereco: json['enddereco'],
+            pago: json['pago'])));
     //print(listPessoasWrap);
     return listPessoasWrap;
+  }
+
+  Future<List<WrapPessoas>> wrapfind() async {
+    var resposta = await http.get(uriREST);
+    if (resposta.statusCode != 200) throw Exception('Erro REST API.');
+    final lista = resposta.body as List;
+    final listaPessoas = lista.map((e) => WrapPessoas.fromJson(e)).toList();
+    return listaPessoas;
   }
 
   final Uno uno;
