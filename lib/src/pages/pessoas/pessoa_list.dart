@@ -1,12 +1,21 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 
+import 'package:renthome/src/api/pessoas/pessoaswrap_api.dart';
+import 'package:renthome/src/models/bens/imovelWrap.dart';
 import 'package:renthome/src/models/pessoas/pessoas.dart';
+import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:renthome/src/services/pessoas/pessoas_service.dart';
 import 'package:renthome/src/states/pessoa_state.dart';
+import 'package:renthome/src/states/pessoas/pessoasWrap_state.dart';
+import 'package:renthome/src/store/pessoas/pessoasWrap_store.dart';
 import 'package:renthome/src/store/pessoas_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uno/uno.dart';
+
+import '../../../nomedasrotas.dart';
 
 class PessoaListPage extends StatefulWidget {
   static const routeName = '/pessoas';
@@ -39,8 +48,11 @@ class Debouncer {
 
 class _PessoaListPageState extends State<PessoaListPage> {
   final store = PessoaStore(PessoaService(Uno()));
-
+  //final wrapstore = PessoasWrapStore(PessoasWrapApi(Uno()));
   final _debouncer = Debouncer(milliseconds: 500);
+  var pg = "0";
+  var ativo = 1;
+  var proprietario = false;
 
   List<Pessoas> pessoa = [];
   List<Pessoas> filteredpessoa = [];
@@ -61,6 +73,22 @@ class _PessoaListPageState extends State<PessoaListPage> {
   Widget iconPagtoButton(Function onPressed) {
     return IconButton(
         icon: Icon(Icons.money_sharp), color: Colors.green, onPressed: () {});
+  }
+
+  Widget iconListarPgButton(Function onPressed) {
+    if (int.parse(pg) > 0) {
+      return IconButton(
+          icon: Icon(Icons.monetization_on),
+          color: Colors.green.shade400,
+          tooltip: 'Listar Pg',
+          onPressed: onPressed);
+    } else {
+      return IconButton(
+          icon: Icon(Icons.list_alt_rounded),
+          color: Colors.green.shade400,
+          tooltip: 'Sem Pg no mês',
+          onPressed: onPressed);
+    }
   }
 
   Widget iconRemoveButton(BuildContext context, Function remove) {
@@ -91,10 +119,38 @@ class _PessoaListPageState extends State<PessoaListPage> {
         });
   }
 
+  Widget iconDelAtivButton(Function onPressed) {
+    if (ativo == 2) {
+      return IconButton(
+          icon: Icon(Icons.update),
+          tooltip: 'Reativar',
+          color: Colors.green,
+          onPressed: onPressed);
+    } else {
+      return IconButton(
+          icon: Icon(Icons.delete),
+          color: Colors.red,
+          tooltip: 'Desativar',
+          onPressed: onPressed);
+    }
+  }
+
+  Widget iconImovelButton(Function onPressed) {
+    return IconButton(
+        icon: Icon(Icons.home),
+        color: Colors.orange,
+        tooltip: 'Manter Imóvel',
+        onPressed: onPressed);
+  }
+
   @override
   void initState() {
     super.initState();
     store.fetchPessoa();
+    //wrapstore.fetchPessoasWrap();
+    //WidgetsBinding.instance?.addPostFrameCallback((_) {
+    //context.read<PessoasWrapStore>().fetchPessoas();
+    //});
   }
 
   @override
@@ -192,39 +248,111 @@ class _PessoaListPageState extends State<PessoaListPage> {
                   itemCount: state.pessoas.length,
                   itemBuilder: (_, index) {
                     final pessoa = state.pessoas[index];
-                    print(pessoa);
+
+                    print('pessoaswrap = $pessoa');
                     String telefone;
                     if (pessoa.telefone == null) {
                       telefone = 'Não informado';
                     } else {
                       telefone = pessoa.telefone;
                     }
-                    return ListTile(
-                      leading: circleAvatar(pessoa.url_avatar),
-                      title: Text(pessoa.nome),
-                      onTap: () {},
-                      subtitle: Text(telefone),
-                      trailing: Container(
-                        width: 144,
-                        child: Row(
-                          children: [
-                            iconEditButton(() {
-                              // _back.goToForm(context, pessoa);
-                            }),
-                            iconPagtoButton(() {
-                              //_back.remove(pessoa.idpessoa, context);
-                            }),
-                            iconRemoveButton(context, () {
-                              //_back.remove(pessoa.idpessoa, context);
-                            })
-                          ],
+                    if (!pessoa.proprietario) {
+                      return ListTile(
+                        leading: circleAvatar(pessoa.url_avatar),
+                        title: Text(pessoa.nome),
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed('/PessoasDetail', arguments: pessoa);
+                        },
+                        subtitle: Text(telefone),
+                        trailing: Container(
+                          width: 192,
+                          child: Row(
+                            children: [
+                              iconEditButton(() {
+                                goToForm(context, pessoa);
+                              }),
+                              iconPagtoButton(() {
+                                if (int.parse(pg) == 0) {
+                                  goToListaPagamentos(context, pessoa);
+                                } else {
+                                  goToFormPagto(context, pessoa);
+                                }
+                              }),
+                              iconDelAtivButton(() {
+                                if (pessoa.status == 1) {
+                                  remove(pessoa.idpessoa, context);
+                                } else {
+                                  reativar(pessoa.idpessoa, context);
+                                }
+                              }),
+                              iconListarPgButton(() {
+                                goToListaPagamentos(context, pessoa);
+                              }),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return ListTile(
+                        leading: circleAvatar(pessoa.url_avatar),
+                        title: Text(pessoa.nome),
+                        onTap: () {},
+                        subtitle: Text(telefone),
+                        trailing: Container(
+                          width: 192,
+                          child: Row(
+                            children: [
+                              iconEditButton(() {
+                                goToForm(context, pessoa);
+                              }),
+                              iconImovelButton(() {
+                                goToImovel(context, pessoa);
+                              }),
+                              iconDelAtivButton(() {
+                                if (pessoa.status == 1) {
+                                  remove(pessoa.idpessoa, context);
+                                } else {
+                                  reativar(pessoa.idpessoa, context);
+                                }
+                              }),
+                              iconListarPgButton(() {
+                                goToListaPagamentos(context, pessoa);
+                              }),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
                   });
             }
             return Container();
           },
         ));
   }
+}
+
+void reativar(int idpessoa, BuildContext context) {}
+
+void remove(int idpessoa, BuildContext context) {}
+
+void goToFormPagto(BuildContext context, Pessoas pessoa) {
+  Navigator.of(context).pushNamed('/Pagamentos', arguments: pessoa);
+}
+
+void goToListaPagamentos(BuildContext context, Pessoas pessoa) {
+  Navigator.of(context).pushNamed('/PagamentosPessoa', arguments: pessoa);
+}
+
+void goToImovel(BuildContext context, Pessoas pessoa) {
+  ImovelWrap imv = ImovelWrap();
+  imv.idproprietario = pessoa.idpessoa;
+  imv.idpessoa = pessoa.idpessoa;
+  imv.idimovelcategoria = 1;
+  imv.status = 1;
+  Navigator.of(context).pushNamed(NomedasRotas.IMOVELFORM, arguments: imv);
+}
+
+void goToForm(BuildContext context, Pessoas pessoa) {
+  Navigator.of(context).pushNamed('/PessoasForm', arguments: pessoa);
 }

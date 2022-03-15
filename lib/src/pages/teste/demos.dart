@@ -58,7 +58,7 @@ final demos = [
   Demo(
     name: 'Pessoas',
     route: '/Pessoas',
-    builder: (context) => PessoastList(),
+    builder: (context) => PessoaListPage(), //PessoastList(),
   ),
   Demo(
     name: 'Pessoass-Form',

@@ -6,8 +6,8 @@ abstract class PessoasWrapState {}
 class InitialPessoasWrapState extends PessoasWrapState {}
 
 class SucessPessoasWrapState extends PessoasWrapState {
-  final List<PessoasWrap> pessoas;
-  SucessPessoasWrapState(this.pessoas);
+  final List<PessoasWrap> wrappessoas;
+  SucessPessoasWrapState(this.wrappessoas);
 }
 
 class ErrorPessoasWrapState extends PessoasWrapState {

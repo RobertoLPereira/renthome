@@ -15,31 +15,30 @@ class PessoasWrapApi implements PessoasWrapDAO {
   Future<List<PessoasWrap>> find() async {
     var resposta = await http.get(uriREST);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
-    //print(resposta.body);
+    print(resposta.body);
     Iterable listDart = json.decode(resposta.body);
-    var listPessoasWrap = List<PessoasWrap>.from(listDart.map((json) =>
-        PessoasWrap(
-            idcontrato: json['idcontrato'],
-            idunidadeimovel: json['idunidadeimovel'],
+    var listPessoasWrap = List<PessoasWrap>.from(listDart.map((json) => PessoasWrap(
+        idcontrato: int.parse(json['idcontrato']),
+        /*idunidadeimovel: json['idunidadeimovel'],
             idlocador: json['idlocador'],
             idlocatario: json['idlocatario'],
             diavencimento: json['diavencimento'],
-            datacontrato: json['datacontrato'],
-            status: json['status'],
-            validadecontrato: json['validadecontrato'],
-            valor: json['valor'],
-            taxacondominio: json['taxacondominio'],
-            valordecaucao: json['valordecaucao'],
-            idpessoa: json['idpessoa'],
-            nome: json['nome'],
-            telefone: json['telefone'],
-            proprietario: json['proprietario'],
-            cadastradoem: json['cadastradoem'],
-            urlAvatar: json['url_avatar'],
-            unidade: json['unidade'],
-            imovel: json['imovel'],
-            enddereco: json['enddereco'],
-            pago: json['pago'])));
+            datacontrato: json['datacontrato'],*/
+        status: int.parse(json['status']),
+        //validadecontrato: json['validadecontrato'],
+        valor: double.parse(json['valor']),
+        //taxacondominio: json['taxacondominio'],
+        //valordecaucao: json['valordecaucao'],
+        idpessoa: json['idpessoa'],
+        nome: json['nome'],
+        telefone: json['telefone'],
+        proprietario: json['proprietario'],
+        //cadastradoem: json['cadastradoem'],
+        urlAvatar: json['url_avatar'],
+        //unidade: json['unidade'],
+        //imovel: json['imovel'],
+        enddereco: json['enddereco'],
+        pago: json['pago'])));
     //print(listPessoasWrap);
     return listPessoasWrap;
   }
@@ -51,8 +50,11 @@ class PessoasWrapApi implements PessoasWrapDAO {
     final response = await uno.get(
         'https://apialugueis.herokuapp.com/Consultar/ select * from  "vw_listacontatosWrap"');
     final lista = response.data as List;
-    print(response.data);
+    print('api');
+    print(response.data.toString());
+    print('api-2');
     final listaPessas = lista.map((e) => PessoasWrap.fromMap(e)).toList();
+    print('api-3');
     return listaPessas;
   }
 

@@ -9,7 +9,7 @@ class PessoasWrapStore extends ValueNotifier<PessoasWrapState> {
   Future fetchPessoasWrap() async {
     value = LoadingPessoasWrapState();
     try {
-      final pessoas = await pessoasWrap.fetchPessoasWrap();
+      final pessoas = await pessoasWrap.find();
       value = SucessPessoasWrapState(pessoas);
     } catch (e) {
       value = ErrorPessoasWrapState(e.toString());

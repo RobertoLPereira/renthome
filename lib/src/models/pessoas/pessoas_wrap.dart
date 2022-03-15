@@ -76,29 +76,30 @@ class PessoasWrap {
   }
 
   factory PessoasWrap.fromMap(Map<String, dynamic> json) {
+    print(json);
     return PessoasWrap(
-      idcontrato: json['idcontrato'],
-      idunidadeimovel: json['idunidadeimovel'],
-      idlocador: json['idlocador'],
-      idlocatario: json['idlocatario'],
-      diavencimento: json['diavencimento'],
-      datacontrato: json['datacontrato'],
-      status: json['status'],
-      validadecontrato: json['validadecontrato'],
-      valor: json['valor'],
-      taxacondominio: json['taxacondominio'],
-      valordecaucao: json['valordecaucao'],
-      idpessoa: json['idpessoa'],
+      idcontrato: int.parse(json['idcontrato']),
+      idunidadeimovel: int.parse(json['idunidadeimovel']),
+      idlocador: int.parse(json['idlocador']),
+      idlocatario: int.parse(json['idlocatario']),
+      diavencimento: int.parse(json['diavencimento']),
+      datacontrato: json['datacontrato'].toString(),
+      status: int.parse(json['status']),
+      validadecontrato: json['validadecontrato'].toString(),
+      valor: double.parse(json['valor']),
+      taxacondominio: double.parse(json['taxacondominio']),
+      valordecaucao: double.parse(json['valordecaucao']),
+      idpessoa: int.parse(json['idpessoa']),
       nome: json['nome'],
-      telefone: json['telefone'],
+      telefone: json['telefone'].toString(),
       proprietario: json['proprietario'],
-      cadastradoem: json['cadastradoem'],
+      cadastradoem: json['cadastradoem'].toString(),
       urlAvatar: json['url_avatar'],
       email: json['email'],
       unidade: json['unidade'],
       imovel: json['imovel'],
       enddereco: json['enddereco'],
-      pago: json['pago'],
+      pago: json['pago'].toString(),
     );
   }
 
