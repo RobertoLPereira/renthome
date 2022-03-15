@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-class PessoasWrap {
+class WrapPessoas {
   int idcontrato;
   int idunidadeimovel;
   int idlocador;
@@ -25,7 +23,7 @@ class PessoasWrap {
   String enddereco;
   String pago;
 
-  PessoasWrap(
+  WrapPessoas(
       {this.idcontrato,
       this.idunidadeimovel,
       this.idlocador,
@@ -49,6 +47,32 @@ class PessoasWrap {
       this.imovel,
       this.enddereco,
       this.pago});
+
+  WrapPessoas.fromJson(Map<String, dynamic> json) {
+    idcontrato = json['idcontrato'];
+    idunidadeimovel = json['idunidadeimovel'];
+    idlocador = json['idlocador'];
+    idlocatario = json['idlocatario'];
+    diavencimento = json['diavencimento'];
+    datacontrato = json['datacontrato'];
+    statuscontrato = json['statuscontrato'];
+    validadecontrato = json['validadecontrato'];
+    valor = json['valor'];
+    taxacondominio = json['taxacondominio'];
+    valordecaucao = json['valordecaucao'];
+    idpessoa = json['idpessoa'];
+    nome = json['nome'];
+    telefone = json['telefone'];
+    proprietario = json['proprietario'];
+    cadastradoem = json['cadastradoem'];
+    status = json['status'];
+    urlAvatar = json['url_avatar'];
+    email = json['email'];
+    unidade = json['unidade'];
+    imovel = json['imovel'];
+    enddereco = json['enddereco'];
+    pago = json['pago'];
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -78,40 +102,8 @@ class PessoasWrap {
     return data;
   }
 
-  factory PessoasWrap.fromMap(Map<String, dynamic> json) {
-    print(json);
-    return PessoasWrap(
-      idcontrato: int.parse(json['idcontrato']),
-      idunidadeimovel: int.parse(json['idunidadeimovel']),
-      idlocador: int.parse(json['idlocador']),
-      idlocatario: int.parse(json['idlocatario']),
-      diavencimento: int.parse(json['diavencimento']),
-      datacontrato: json['datacontrato'].toString(),
-      statuscontrato: int.parse(json['statuscontrato']),
-      validadecontrato: json['validadecontrato'].toString(),
-      valor: json['valor'],
-      taxacondominio: json['taxacondominio'],
-      valordecaucao: json['valordecaucao'],
-      idpessoa: int.parse(json['idpessoa']),
-      nome: json['nome'],
-      telefone: json['telefone'].toString(),
-      proprietario: json['proprietario'],
-      cadastradoem: json['cadastradoem'].toString(),
-      status: int.parse(json['status']),
-      urlAvatar: json['url_avatar'],
-      email: json['email'],
-      unidade: json['unidade'],
-      imovel: json['imovel'],
-      enddereco: json['enddereco'],
-      pago: json['pago'].toString(),
-    );
-  }
-
-  factory PessoasWrap.fromJson(String source) =>
-      PessoasWrap.fromMap(json.decode(source));
-
   @override
   String toString() {
-    return 'PessoasWrap(idcontrato:$idcontrato,idunidadeimovel:$idunidadeimovel,idlocador:$idlocador,idlocatario:$idlocatario,diavencimento:$diavencimento,datacontrato:$datacontrato,status:$status,validadecontrato:$validadecontrato,valor:$valor,taxacondominio:$taxacondominio,valordecaucao:$valordecaucao,idpessoa:$idpessoa,nome:$nome,telefone:$telefone,proprietario:$proprietario,cadastradoem:$cadastradoem,url_avatar:$urlAvatar,email:$email,unidade:$unidade,imovel:$imovel,enddereco:$enddereco,pago:$pago)';
+    return 'WrapPessoas(idcontrato:$idcontrato,idunidadeimovel:$idunidadeimovel,idlocador:$idlocador,idlocatario:$idlocatario,diavencimento:$diavencimento,datacontrato:$datacontrato,status:$status,validadecontrato:$validadecontrato,valor:$valor,taxacondominio:$taxacondominio,valordecaucao:$valordecaucao,idpessoa:$idpessoa,nome:$nome,telefone:$telefone,proprietario:$proprietario,cadastradoem:$cadastradoem,url_avatar:$urlAvatar,email:$email,unidade:$unidade,imovel:$imovel,enddereco:$enddereco,pago:$pago)';
   }
 }

@@ -38,7 +38,7 @@ class PagamentoFormBack {
     dtpgto += '-' + DateTime.now().day.toString();
     print(dtpgto);
     pagto.datapagamento = dtpgto.toString();
-    pagto.valorpago = pessoawrap.valor;
+    pagto.valorpago = pessoawrap.valor as double;
     pagto.juros = 0.00;
     pagto.desconto = 0.00;
     pagto.idcontrato = pessoawrap.idcontrato;
