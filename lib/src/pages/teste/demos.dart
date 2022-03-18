@@ -23,6 +23,7 @@ import 'package:renthome/app/view/pessoas/pessoas_list.dart';
 import 'package:renthome/comboAninhado/views/home_page.dart';
 import 'package:renthome/src/pages/imovel/form_imovel.dart';
 import 'package:renthome/src/pages/imovel/form_leituraunidade.dart';
+import 'package:renthome/src/pages/pessoas/filter_pessoa_list_page.dart';
 import 'package:renthome/src/pages/pessoas/pessoa_filter.dart';
 import 'package:renthome/src/pages/pessoas/pessoa_list.dart';
 import '../../../app/view/apoio/status/status_details.dart';
@@ -58,7 +59,7 @@ final demos = [
   Demo(
     name: 'Pessoas',
     route: '/Pessoas',
-    builder: (context) => PessoastList(),
+    builder: (context) => FilterPessoasListPage(), //PessoastList(),
   ),
   Demo(
     name: 'Pessoass-Form',

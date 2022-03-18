@@ -38,7 +38,7 @@ class CategoriaList extends StatelessWidget {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            'Denominação: ${lista[index].denominacao}',
+                            '${lista[index].denominacao}',
                             style: TextStyle(fontSize: 18),
                           ),
                         ],
