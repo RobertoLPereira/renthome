@@ -162,7 +162,8 @@ class _PessoaListPageState extends State<PessoaListPage> {
             IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
-                  // _back.goToForm(context);
+                  Pessoas pes;
+                  goToForm(context, pes);
                 }),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),

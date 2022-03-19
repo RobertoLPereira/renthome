@@ -18,6 +18,8 @@ class NomedasRotas {
   static const IMOVELFORM = '/Imovel-Form';
   static const IMOVELDETAIL = '/Imovel-Detail';
   static const PESSOAS = '/Pessoas';
+  static const PESSOASDETAIL = '/PessoasDetail';
+  static const PESSOASFORM = '/PessoasForm';
   static const UNIDADEIMOVEL = '/Unidades';
   static const UNIDADEFORM = '/Unidade-Form';
   static const ALUGARUNIDADE = '/Alugar-Form';

@@ -34,11 +34,11 @@ class CategoriaList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Nº: ${lista[index].idcategoriadeimoveis}',
+                            lista[index].denominacao,
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            'Denominação: ${lista[index].denominacao}',
+                            'Nº: ${lista[index].idcategoriadeimoveis}',
                             style: TextStyle(fontSize: 18),
                           ),
                         ],

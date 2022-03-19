@@ -14,7 +14,7 @@ class PessoasWrapFormBack {
 
   // diferenciar novo com alteração
   PessoasWrapFormBack(BuildContext context) {
-    var parameter = ModalRoute.of(context).settings.arguments;
+    var parameter = ModalRoute.of(context).settings.arguments as PessoasWrap;
     pessoasWrap = (parameter == null) ? PessoasWrap() : parameter;
   }
 

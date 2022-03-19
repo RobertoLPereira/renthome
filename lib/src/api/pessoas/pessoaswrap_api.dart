@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:renthome/app/domain/interfaces/pessoas_wrap_dao.dart';
 import 'package:renthome/src/models/pagamento/pagamentoPessoa.dart';
+import 'package:renthome/src/models/pessoas/pessoas.dart';
 import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 import 'package:renthome/src/utils/consultas_genericas.dart';
@@ -51,6 +52,29 @@ class PessoasWrapApi implements PessoasWrapDAO {
     final lista = resposta.body as List;
     final listaPessoas = lista.map((e) => WrapPessoas.fromJson(e)).toList();
     return listaPessoas;
+  }
+
+  static Future<List<Pessoas>> getPessoasWrap(String query) async {
+    const Api_Alugueis =
+        'https://apialugueis.herokuapp.com/Consultar/Select * from "vw_listacontatosWrap"';
+    var resposta = await http.get(Uri.parse(Api_Alugueis));
+    if (resposta.statusCode != 200) throw Exception('Erro REST API-Pessoas.');
+    //final lista = resposta.body as List;
+    //final listaPessoas = lista.map((e) => PessoasWrap.fromJson(e)).toList();
+    //return listaPessoas;
+    if (resposta.statusCode == 200) {
+      final List pessoas = json.decode(resposta.body);
+      return pessoas.map((json) => Pessoas.fromJson(json)).where((pessoa) {
+        final titleLower = pessoa.nome.toLowerCase();
+        final authorLower = pessoa.telefone.toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return titleLower.contains(searchLower) ||
+            authorLower.contains(searchLower);
+      }).toList();
+    } else {
+      throw Exception();
+    }
   }
 
   final Uno uno;

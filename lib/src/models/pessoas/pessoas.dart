@@ -44,8 +44,15 @@ class Pessoas {
 
   String toJson() => json.encode(toMap());
 
-  factory Pessoas.fromJson(String source) =>
-      Pessoas.fromMap(json.decode(source));
+  factory Pessoas.fromJson(Map<String, dynamic> map) => Pessoas(
+        idpessoa: map['idpessoa'],
+        nome: map['nome'],
+        telefone: map['telefone'],
+        proprietario: map['proprietario'],
+        cadastradoem: map['cadastradoem'],
+        status: map['status'],
+        url_avatar: map['url_avatar'],
+      );
 /*
   @override
   String toString() {
