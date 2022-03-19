@@ -9,9 +9,6 @@ class WrapPessoasApi {
   static Future<List<Pessoas>> getPessoasWrap(String query) async {
     var resposta = await http.get(Uri.parse(Api_Alugueis));
     if (resposta.statusCode != 200) throw Exception('Erro REST API-Pessoas.');
-    //final lista = resposta.body as List;
-    //final listaPessoas = lista.map((e) => PessoasWrap.fromJson(e)).toList();
-    //return listaPessoas;
     if (resposta.statusCode == 200) {
       final List pessoas = json.decode(resposta.body);
       return pessoas.map((json) => Pessoas.fromJson(json)).where((pessoa) {

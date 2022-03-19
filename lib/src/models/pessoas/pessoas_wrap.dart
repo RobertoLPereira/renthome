@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class PessoasWrap {
   int idcontrato;
   int idunidadeimovel;
@@ -105,31 +107,8 @@ class PessoasWrap {
     );
   }
 
-  factory PessoasWrap.fromJson(Map<String, dynamic> json) => PessoasWrap(
-        idcontrato: json['idcontrato'],
-        idunidadeimovel: json['idunidadeimovel'],
-        idlocador: json['idlocador'],
-        idlocatario: json['idlocatario'],
-        diavencimento: json['diavencimento'],
-        datacontrato: json['datacontrato'],
-        statuscontrato: json['statuscontrato'],
-        validadecontrato: json['validadecontrato'],
-        valor: json['valor'],
-        taxacondominio: json['taxacondominio'],
-        valordecaucao: json['valordecaucao'],
-        idpessoa: json['idpessoa'],
-        nome: json['nome'],
-        telefone: json['telefone'],
-        proprietario: json['proprietario'],
-        cadastradoem: json['cadastradoem'],
-        status: json['status'],
-        urlAvatar: json['url_avatar'],
-        email: json['email'],
-        unidade: json['unidade'],
-        imovel: json['imovel'],
-        enddereco: json['enddereco'],
-        pago: json['pago'],
-      );
+  factory PessoasWrap.fromJson(String source) =>
+      PessoasWrap.fromMap(json.decode(source));
 
   @override
   String toString() {

@@ -7,7 +7,7 @@ class PessoasDetailsBack {
   PessoasWrap pessoasWrap;
 
   PessoasDetailsBack(this.context) {
-    pessoasWrap = ModalRoute.of(context).settings.arguments as PessoasWrap;
+    pessoasWrap = ModalRoute.of(context).settings.arguments;
   }
 
   goToBack() {

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:renthome/src/api/pessoas/pessoaswrap_api.dart';
 import 'package:renthome/src/api/pessoas/wrap_pessoas_api.dart';
 import 'package:renthome/src/models/bens/imovelWrap.dart';
 import 'package:renthome/src/models/pessoas/pessoas.dart';
@@ -47,7 +46,7 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
   }
 
   Future init() async {
-    final pessoas = await PessoasWrapApi.getPessoasWrap(query);
+    final pessoas = await WrapPessoasApi.getPessoasWrap(query);
 
     //setState(() => this.pessoas = pessoas);
     setState(() {
