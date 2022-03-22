@@ -7,9 +7,9 @@ class WrapPessoas {
   String datacontrato;
   int statuscontrato;
   String validadecontrato;
-  int valor;
-  int taxacondominio;
-  int valordecaucao;
+  dynamic valor;
+  dynamic taxacondominio;
+  dynamic valordecaucao;
   int idpessoa;
   String nome;
   String telefone;
