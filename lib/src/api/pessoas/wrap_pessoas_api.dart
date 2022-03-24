@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:renthome/src/models/contrato/contrato.dart';
 import 'package:renthome/src/models/pessoas/pessoas.dart';
+import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 
 class WrapPessoasApi {
   static const Api_Alugueis =
@@ -40,5 +42,75 @@ class WrapPessoasApi {
     } else {
       throw Exception();
     }
+  }
+
+  static Future<List<Pessoas>> criarInquilino(PessoasWrap pessoasWrap) async {
+    print('Criar inquilino - Api');
+    var headers = {'Content-Type': 'application/json'};
+    var pessoasWrapJson = jsonEncode({
+      'idpessoa': pessoasWrap.idpessoa,
+      'nome': pessoasWrap.nome,
+      'telefone': pessoasWrap.telefone,
+      'email': pessoasWrap.email,
+      'url_avatar': pessoasWrap.urlAvatar,
+      'proprietario': pessoasWrap.proprietario,
+      'cadastradoem': pessoasWrap.cadastradoem,
+      'status': pessoasWrap.status
+    });
+    var uri = Uri.parse('https://apialugueis.herokuapp.com/Pessoas');
+    if (pessoasWrap.idpessoa == null) {
+      var resposta =
+          await http.post(uri, headers: headers, body: pessoasWrapJson);
+      Iterable listDart = json.decode(resposta.body);
+      var listPessoas = List<Pessoas>.from(listDart.map((json) => Pessoas(
+          status: int.parse(json['status']),
+          idpessoa: json['idpessoa'],
+          nome: json['nome'],
+          telefone: json['telefone'],
+          proprietario: json['proprietario'],
+          cadastradoem: json['cadastradoem'],
+          url_avatar: json['url_avatar'])));
+      //print(listPessoasWrap);
+      return listPessoas;
+    }
+    return [];
+  }
+
+  static Future<List<Contrato>> criarContrato(Contrato contrato) async {
+    print('Criar contrato - Api');
+    var headers = {'Content-Type': 'application/json'};
+    var contratoJson = jsonEncode({
+      'idcontrato': contrato.idcontrato,
+      'idunidadeimovel': contrato.idunidadeimovel,
+      'idlocador': contrato.idlocador,
+      'idlocatario': contrato.idlocatario,
+      'diavencimento': contrato.diavencimento,
+      'datacontrato': contrato.datacontrato,
+      'status': contrato.status,
+      'validadecontrato': contrato.validadecontrato,
+      'valor': contrato.valor,
+      'taxacondominio': contrato.taxacondominio,
+      'valordecaucao': contrato.valordecaucao,
+    });
+    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contrato');
+    if (contrato.idcontrato == null) {
+      var resposta = await http.post(uri, headers: headers, body: contratoJson);
+      Iterable listDart = json.decode(resposta.body);
+      var listContrato = List<Contrato>.from(listDart.map((json) => Contrato(
+          idcontrato: int.parse(json['idcontrato']),
+          idunidadeimovel: json['idunidadeimovel'],
+          idlocador: json['idlocador'],
+          idlocatario: json['idlocatario'],
+          diavencimento: json['diavencimento'],
+          datacontrato: json['datacontrato'],
+          status: int.parse(json['status']),
+          validadecontrato: json['validadecontrato'],
+          valor: json['valor'],
+          taxacondominio: json['taxacondominio'],
+          valordecaucao: json['valordecaucao'])));
+      //print(listPessoasWrap);
+      return listContrato;
+    }
+    return [];
   }
 }

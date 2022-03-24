@@ -197,11 +197,9 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
       });
 
   Widget buildPessoasWrap(Pessoas pessoa) => ListTile(
-        leading: Image.network(
-          pessoa.url_avatar,
-          fit: BoxFit.cover,
-          width: 50,
-          height: 50,
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.shade300,
+          child: Text(pessoa.nome.substring(0, 1)),
         ),
         title: Text(pessoa.nome),
         onTap: () {
@@ -234,11 +232,9 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
       );
   //Widget para quando a pessoa for proprietário
   Widget buildPessoasProp(Pessoas pessoa) => ListTile(
-        leading: Image.network(
-          pessoa.url_avatar,
-          fit: BoxFit.cover,
-          width: 50,
-          height: 50,
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.shade300,
+          child: Text(pessoa.nome.substring(0, 1)),
         ),
         title: Text(pessoa.nome),
         onTap: () {

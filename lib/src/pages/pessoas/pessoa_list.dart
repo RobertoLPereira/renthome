@@ -258,7 +258,10 @@ class _PessoaListPageState extends State<PessoaListPage> {
                     }
                     if (!pessoa.proprietario) {
                       return ListTile(
-                        leading: circleAvatar(pessoa.url_avatar),
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.grey.shade300,
+                          child: Text(pessoa.nome.substring(0, 1)),
+                        ),
                         title: Text(pessoa.nome),
                         onTap: () {
                           Navigator.of(context)
@@ -295,7 +298,10 @@ class _PessoaListPageState extends State<PessoaListPage> {
                       );
                     } else {
                       return ListTile(
-                        leading: circleAvatar(pessoa.url_avatar),
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.grey.shade300,
+                          child: Text(pessoa.nome.substring(0, 1)),
+                        ),
                         title: Text(pessoa.nome),
                         onTap: () {},
                         subtitle: Text(telefone),

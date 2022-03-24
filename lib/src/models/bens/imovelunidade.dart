@@ -7,6 +7,7 @@ class Imovelunidade {
   String descricao;
   int status;
   int idimovelcategoria;
+  String nomeimovel;
 
   Imovelunidade(
       {this.idunidade,
@@ -14,7 +15,8 @@ class Imovelunidade {
       this.idlocatario,
       this.descricao,
       this.status,
-      this.idimovelcategoria});
+      this.idimovelcategoria,
+      this.nomeimovel});
   Map<String, dynamic> toMap() {
     return {
       'idunidade': idunidade,
@@ -23,6 +25,7 @@ class Imovelunidade {
       'descricao': descricao,
       'status': status,
       'idimovelcategoria': idimovelcategoria,
+      'nomeimovel': nomeimovel
     };
   }
 
@@ -34,6 +37,7 @@ class Imovelunidade {
       descricao: map['descricao'],
       status: map['status'],
       idimovelcategoria: map['idimovelcategoria'],
+      nomeimovel: map['nomeimovel'],
     );
   }
 

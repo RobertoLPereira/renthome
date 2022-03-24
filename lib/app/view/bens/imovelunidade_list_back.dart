@@ -3,6 +3,7 @@
 import 'package:renthome/app/domain/entities/unidade_imovel.dart';
 import 'package:renthome/src/models/bens/imovelunidade.dart';
 import 'package:renthome/src/models/bens/leituraaguaunidade.dart';
+import 'package:renthome/src/models/contrato/contrato_wrap.dart';
 import 'package:renthome/src/models/interfaces/bens/imovelunidade_interface.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -50,7 +51,27 @@ abstract class _ImovelUnidadeListBack with Store {
   }
 
   goToAlugarUnidades(BuildContext context, UnidadeImovel unidade) {
-    Navigator.of(context).pushNamed('/Alugar-Form', arguments: unidade);
+    ContratoWrap ctr = ContratoWrap();
+    ctr.idlocatario = (unidade.idlocatario);
+    ctr.idlocador = 1;
+    ctr.idunidadeimovel = int.parse(unidade.idunidade);
+    ctr.proprietario = false;
+    ctr.status_pessoa = 1;
+    ctr.valor = 0.00;
+    ctr.valordecaucao = 0.00;
+    ctr.taxacondominio = 0.00;
+    ctr.idunidade = int.parse(unidade.idunidade);
+    ctr.descricao = unidade.nomeimovel + '-' + unidade.descricao;
+    ctr.status = 3;
+    ctr.idimovel = int.parse(unidade.idimovel);
+    if (unidade.nome == 'Não Alugado') {
+      unidade.nome = '';
+    }
+    ctr.nome = unidade.nome;
+    ctr.telefone = '';
+    ctr.idimovelcategoria = int.parse(unidade.idimovelcategoria);
+    ctr.diavencimento = DateTime.now().day.toString();
+    Navigator.of(context).pushNamed('/Alugar-Form', arguments: ctr);
   }
 
   goToManterConsumo(BuildContext context, UnidadeImovel unidade) {
