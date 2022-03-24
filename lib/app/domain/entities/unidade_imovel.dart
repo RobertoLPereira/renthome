@@ -9,6 +9,7 @@ class UnidadeImovel {
   String idimovelcategoria;
   String nome;
   String endereco;
+  String nomeimovel;
 
   UnidadeImovel(
       {this.idunidade,
@@ -18,7 +19,8 @@ class UnidadeImovel {
       this.status,
       this.idimovelcategoria,
       this.nome,
-      this.endereco});
+      this.endereco,
+      this.nomeimovel});
   Map<String, dynamic> toMap() {
     return {
       'idunidade': idunidade,
@@ -29,6 +31,7 @@ class UnidadeImovel {
       'idimovelcategoria': idimovelcategoria,
       'nome': nome,
       'endereco': endereco,
+      'nomeimovel': nomeimovel
     };
   }
 
@@ -42,6 +45,7 @@ class UnidadeImovel {
       idimovelcategoria: map['idimovelcategoria'],
       nome: map['nome'],
       endereco: map['endereco'],
+      nomeimovel: map['nomeimovel'],
     );
   }
 
@@ -51,6 +55,6 @@ class UnidadeImovel {
       UnidadeImovel.fromMap(json.decode(source));
   @override
   String toString() {
-    return 'UnidadeImovel(idunidade:$idunidade,idimovel:$idimovel,idlocatario:$idlocatario,descricao:$descricao,status:$status,idimovelcategoria:$idimovelcategoria,nome:$nome,endereco:$endereco)';
+    return 'UnidadeImovel(idunidade:$idunidade,idimovel:$idimovel,idlocatario:$idlocatario,descricao:$descricao,status:$status,idimovelcategoria:$idimovelcategoria,nome:$nome,endereco:$endereco,nomeimovel:$nomeimovel)';
   }
 }

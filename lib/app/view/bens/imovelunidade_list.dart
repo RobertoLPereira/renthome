@@ -167,8 +167,9 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                         return ListTile(
                           leading: circleAvatar(
                               'https://cdn-icons-png.flaticon.com/512/2329/2329140.png'),
-                          title: Text(
-                              imovelunid.descricao + ',' + imovelunid.endereco),
+                          title: Text(imovelunid.nomeimovel +
+                              ',' +
+                              imovelunid.descricao),
                           onTap: () {
                             _back.goToDetails(context, imovelunid);
                           },
@@ -205,8 +206,9 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                         return ListTile(
                           leading: circleAvatar(
                               'https://cdn-icons-png.flaticon.com/512/2329/2329140.png'),
-                          title: Text(
-                              imovelunid.descricao + ',' + imovelunid.endereco),
+                          title: Text(imovelunid.nomeimovel +
+                              ',' +
+                              imovelunid.descricao),
                           onTap: () {
                             _back.goToDetails(context, imovelunid);
                           },

@@ -24,6 +24,7 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
               idimovelcategoria: imovelunidade['idimovelcategoria'].toString(),
               nome: imovelunidade['nome'],
               endereco: imovelunidade['endereco'],
+              nomeimovel: imovelunidade['nomeimovel'],
             )));
     return listImovelunidade;
   }

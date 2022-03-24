@@ -20,6 +20,7 @@ class ImovelUnidadeRestApi implements ImovelUnidadeInterface {
               idlocatario: imovel['idlocatario'],
               status: imovel['status'],
               idimovelcategoria: imovel['idimovelcategoria'],
+              nomeimovel: imovel['nomeimovel'],
             )));
     return listImovel;
   }
@@ -28,7 +29,8 @@ class ImovelUnidadeRestApi implements ImovelUnidadeInterface {
 
   ImovelUnidadeRestApi(this.uno);
   Future<List<Imovelunidade>> fetchImovel() async {
-    final response = await uno.get('https://apialugueis.herokuapp.com/Imovelunidade');
+    final response =
+        await uno.get('https://apialugueis.herokuapp.com/Imovelunidade');
     final lista = response.data as List;
     final listaImovel = lista.map((e) => Imovelunidade.fromMap(e)).toList();
     return listaImovel;
