@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:renthome/src/models/dashboard/dashboard_piza.dart';
-import 'package:renthome/src/utils/controller_dashboard.dart';
-import 'package:renthome/src/utils/vw_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../constants.dart';
@@ -23,70 +20,46 @@ class PanelLeftPage extends StatefulWidget {
 }
 
 class _PanelLeftPageState extends State<PanelLeftPage> {
-  final ctr = DashBoardController();
-
-  List<Todo> _todos = [
-    Todo(name: "Purchase Paper", enable: true),
-    Todo(name: "Refill the inventory of speakers", enable: true),
-    Todo(name: "Hire someone", enable: true),
-    Todo(name: "Maketing Strategy", enable: true),
-    Todo(name: "Selling furniture", enable: true),
-    Todo(name: "Finish the disclosure", enable: true),
-  ];
-  List dashboard = [];
-  dynamic wtotal;
-  var wdash = <DashboardPiza>[];
+  List<Todo> _todos = [];
+  double wtotal = 0.00;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
-    this.fetchDashBoard();
-    print('painel');
-    //wtotal = ctr.total;
-    // print(wtotal.toString());
-    //print('painel 2');
+    this.fetchUnidadesEmDia();
   }
 
-  fetchDashBoard() async {
+  fetchUnidadesEmDia() async {
     try {
       setState(() async {
-        var url = NomeServidoresApi.Api_Alugueis + 'Consultar/$vw_dashboard';
+        var url = NomeServidoresApi.Api_Alugueis +
+            '/Consultar/select * from "vw_unidades_em_dia_mescorrente"';
         try {
           var response = await http.get(Uri.tryParse(url));
-          //print(response.body);
-          //print("foi impresso body");
+          print(response.body);
           if (response.statusCode == 200) {
-            var resultado = jsonDecode(response.body);
             Iterable listDart = json.decode(response.body);
-
+            print(response.body);
             setState(() {
               for (Map<String, dynamic> map in listDart) {
-                wdash.add(DashboardPiza(
-                    ativos: int.parse(map['ativos']),
-                    valortotalcontrato: map['valortotalcontrato'],
-                    inativos: int.parse(map['inativos']),
-                    vencidos: (map['vencidos'] - map['pagosnovencimento']),
-                    pagosematraso: map['pagosematraso'],
-                    pagosnovencimento: map['pagosnovencimento'],
-                    emdia: map['emdia']));
+                _todos.add(Todo(name: (map['name']), enable: true));
               }
-              wtotal = wdash[0].valortotalcontrato;
-              ctr.atualiza_valores(wdash);
-              ctr.valor_contrato();
-              dashboard = resultado;
-
-              print('$wtotal');
+              isLoading = false;
             });
           } else {
-            dashboard = [];
+            _todos = [];
+            isLoading = false;
           }
+          isLoading = true;
         } catch (e) {
-          if (e.toString() == 'XMLHttpRequest error') {
-            print('Servidor fora do ar');
-          }
+          isLoading = false;
+          print('Servidor ($url) fora do ar');
+          if (e.toString() == 'XMLHttpRequest error') {}
           print(e.toString());
         }
       });
     } catch (e) {
+      isLoading = false;
       print('deu erro ' + e);
     }
   }

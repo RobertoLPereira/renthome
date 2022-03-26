@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:renthome/src/models/contrato/contrato.dart';
 import 'package:renthome/src/models/pessoas/pessoas.dart';
+import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 
 class WrapPessoasApi {
   static const Api_Alugueis =

@@ -3,13 +3,10 @@ import 'package:renthome/nomedosservidores.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../src/models/dashboard/dashboard_piza.dart';
-import '../../src/utils/vw_dashboard.dart';
 import '../../../constants.dart';
 import 'package:http/http.dart' as http;
 
-import 'utils/controller_dashboard.dart';
+import 'models/dashboard/dashboard_perc.dart';
 
 class Chart extends StatelessWidget {
   @override
@@ -89,76 +86,58 @@ class PieChartSample2 extends StatefulWidget {
 
 class PieChart2State extends State {
   int touchedIndex = -1;
-  final ctr = DashBoardController();
-  dynamic pctatraso, pctpgemdia, pctalemdia, alvencidos, pgvecto;
+  dynamic pctatraso = 0.00;
+  dynamic pctpgemdia = 0.00;
+  dynamic pctalemdia = 0.00;
+  dynamic alvencidos = 0.00;
+  dynamic percemdia = 0.00;
   // ignore: unnecessary_question_mark
   dynamic tt;
   List dashboard = [];
-  var wdash = <DashboardPiza>[];
+  var wdash = <DashBoardPerc>[];
   bool isLoading = false;
-  // ignore: missing_return
-  Widget get fieldEmDia {
-    Observer(builder: (_) {
-      return ctr.pctpgemdia.value;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    this.fetchDashBoard();
+    this.fetchDashBoardPerc();
   }
 
-  fetchDashBoard() async {
+  fetchDashBoardPerc() async {
     try {
       setState(() async {
-        var url = NomeServidoresApi.Api_Alugueis + 'Consultar/$vw_dashboard';
+        var url = NomeServidoresApi.Api_Alugueis +
+            '/Consultar/select * from "vw_dashboard_perc"';
         try {
           var response = await http.get(Uri.tryParse(url));
-          //print(response.body);
-          //print("foi impresso body");
           if (response.statusCode == 200) {
-            var resultado = jsonDecode(response.body);
             Iterable listDart = json.decode(response.body);
-
             setState(() {
               for (Map<String, dynamic> map in listDart) {
-                wdash.add(DashboardPiza(
-                    ativos: int.parse(map['ativos']),
+                wdash.add(DashBoardPerc(
+                    ativos: (map['ativos']),
                     valortotalcontrato: map['valortotalcontrato'],
-                    inativos: int.parse(map['inativos']),
-                    vencidos: (map['vencidos'] - map['pagosnovencimento']),
+                    inativos: (map['inativos']),
+                    vencidos: (map['vencidos']),
                     pagosematraso: map['pagosematraso'],
                     pagosnovencimento: map['pagosnovencimento'],
-                    emdia: map['emdia']));
+                    emdia: map['emdia'],
+                    percemdia: map['percemdia'],
+                    percvencidos: map['percvencidos'],
+                    percpgematraso: map['percpgematraso']));
               }
-              ctr.atualiza_valores(wdash);
-              var wsalvencidos = (wdash[0].valortotalcontrato - wdash[0].emdia);
-              wsalvencidos = (wsalvencidos / wdash[0].valortotalcontrato) * 100;
-              alvencidos = ctr.alvencidos;
+              alvencidos = double.tryParse(wdash[0].percvencidos);
+              pctalemdia = double.tryParse(wdash[0].percemdia);
+              percemdia = double.tryParse(wdash[0].percemdia);
+              pctatraso = double.tryParse(wdash[0].percpgematraso);
+              if (pctalemdia > pctatraso) {
+                pctpgemdia = pctalemdia;
+                pctpgemdia = pctpgemdia - pctatraso;
+              } else {
+                pctpgemdia = pctatraso;
+                pctpgemdia = pctpgemdia - pctalemdia;
+              }
 
-              ctr.pctpgemdia =
-                  ((wdash[0].emdia / wdash[0].valortotalcontrato) * 100)
-                      .roundToDouble();
-              ctr.pctalemdia =
-                  ((wdash[0].pagosnovencimento / wdash[0].valortotalcontrato)
-                          .roundToDouble() *
-                      100);
-              ctr.pgvecto = ((wdash[0].pagosnovencimento / ctr.pctpgemdia)
-                  .roundToDouble());
-              ctr.pctatraso =
-                  ((wdash[0].pagosematraso / ctr.pctpgemdia).roundToDouble());
-              pctatraso = ctr.pctatraso.ceilToDouble();
-              pctpgemdia = ctr.pctpgemdia.ceilToDouble();
-              pctalemdia = ctr.pctalemdia.ceilToDouble();
-              alvencidos = wsalvencidos.ceilToDouble();
-              pgvecto = ctr.pgvecto.ceilToDouble();
-
-              dashboard = resultado;
               isLoading = false;
-
-              //  print(
-              //    'pctatraso:$pctatraso,pctpgemdia: $pctpgemdia,pctalemdia: $pctalemdia,alvencidos: $alvencidos');
             });
           } else {
             dashboard = [];
@@ -167,13 +146,14 @@ class PieChart2State extends State {
 
           isLoading = true;
         } catch (e) {
-          if (e.toString() == 'XMLHttpRequest error') {
-            print('Servidor fora do ar');
-          }
+          isLoading = false;
+          print('Servidor ($url) fora do ar');
+          if (e.toString() == 'XMLHttpRequest error') {}
           print(e.toString());
         }
       });
     } catch (e) {
+      isLoading = false;
       print('deu erro ' + e);
     }
   }
@@ -282,8 +262,8 @@ class PieChart2State extends State {
         case 0:
           return PieChartSectionData(
             color: const Color(0xff0293ee),
-            value: pctpgemdia,
-            title: '$pctpgemdia%',
+            value: percemdia,
+            title: '$percemdia%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -315,8 +295,8 @@ class PieChart2State extends State {
         case 3:
           return PieChartSectionData(
             color: const Color(0xff13d38e),
-            value: pgvecto,
-            title: '$pgvecto%',
+            value: pctpgemdia,
+            title: '$pctpgemdia%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
