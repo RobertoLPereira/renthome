@@ -6,7 +6,7 @@ abstract class PessoasWrapDAO {
   Future<List<PessoasWrap>> find();
   Future<List<WrapPessoas>> wrapfind();
   Future<List<PagamentosPessoa>> listar(dynamic idpessoa);
-  save(PessoasWrap pessoasWrap);
+  save(WrapPessoas pessoasWrap);
   remove(dynamic id);
   reativar(dynamic id);
 }

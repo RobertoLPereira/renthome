@@ -1,10 +1,10 @@
 import 'package:renthome/app/domain/services/pessoas_wrap_service.dart';
-import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 
 class PessoasWrapFormBack {
-  PessoasWrap pessoasWrap;
+  WrapPessoas pessoasWrap;
   var _service = GetIt.I.get<PessoasWrapService>();
   bool _nameIsValid;
   bool _emailIsValid;
@@ -15,7 +15,7 @@ class PessoasWrapFormBack {
   // diferenciar novo com alteração
   PessoasWrapFormBack(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
-    pessoasWrap = (parameter == null) ? PessoasWrap() : parameter;
+    pessoasWrap = (parameter == null) ? WrapPessoas() : parameter;
   }
 
   //salvar

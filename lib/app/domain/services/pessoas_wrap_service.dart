@@ -28,7 +28,7 @@ class PessoasWrapService {
     await _dao.reativar(idpessoa);
   }
 
-  save(PessoasWrap pessoasWrap) async {
+  save(WrapPessoas pessoasWrap) async {
     validateName(pessoasWrap.nome);
     validateEmail(pessoasWrap.email);
     validatePhone(pessoasWrap.telefone);

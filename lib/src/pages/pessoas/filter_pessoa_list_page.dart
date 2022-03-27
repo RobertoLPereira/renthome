@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:renthome/src/api/pessoas/wrap_pessoas_api.dart';
 import 'package:renthome/src/models/bens/imovelWrap.dart';
-import 'package:renthome/src/models/pessoas/pessoas.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 import 'package:renthome/src/widgets/serach_widget.dart';
 
 import '../../../nomedasrotas.dart';
@@ -13,8 +13,8 @@ class FilterPessoasListPage extends StatefulWidget {
 }
 
 class FilterPessoasListPageState extends State<FilterPessoasListPage> {
-  List<Pessoas> pessoas = [];
-  List<Pessoas> wpessoas = [];
+  List<WrapPessoas> pessoas = [];
+  List<WrapPessoas> wpessoas = [];
   String query = '';
   Timer debouncer;
   var pg = "0";
@@ -59,7 +59,7 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
     return IconButton(
       icon: Icon(Icons.edit),
       color: Colors.orange,
-      onPressed: () {},
+      onPressed: onPressed,
     );
   }
 
@@ -145,7 +145,7 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
             IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {
-                  Pessoas pes;
+                  WrapPessoas pes;
                   goToForm(context, pes);
                 }),
           ],
@@ -158,15 +158,32 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                 itemCount: pessoas.length,
                 itemBuilder: (context, index) {
                   final pessoa = pessoas[index];
-                  if (pessoa.telefone == null) {
-                    telefone = 'Não informado';
+                  print(pessoa.nome.toString());
+                  if (pessoa.proprietario == null) {
+                    proprietario = false;
                   } else {
-                    telefone = pessoa.telefone;
+                    proprietario = true;
                   }
-                  if (pessoa.proprietario) {
-                    return buildPessoasWrap(pessoa);
+                  if (pessoa.telefone == null) {
+                    pessoa.telefone = 'Não Informado';
+                  }
+                  if (pessoa.pago == null) {
+                    pg = 0 as String;
                   } else {
+                    pg = pessoa.pago;
+                  }
+                  ativo = pessoa.status;
+                  if (pessoa.proprietario) {
+                    print('tem contrato $pessoa.idcontrato');
                     return buildPessoasProp(pessoa);
+                  } else {
+                    if (pessoa.idcontrato == 0) {
+                      print('proprietario $pessoa.idcontrato');
+                      return buildPessoasContato(pessoa);
+                    } else {
+                      print('nao tem contrato $pessoa.idcontrato');
+                      return buildPessoasWrap(pessoa);
+                    }
                   }
                 },
               ),
@@ -196,7 +213,7 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
         });
       });
 
-  Widget buildPessoasWrap(Pessoas pessoa) => ListTile(
+  Widget buildPessoasWrap(WrapPessoas pessoa) => ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.grey.shade300,
           child: Text(pessoa.nome.substring(0, 1)),
@@ -205,16 +222,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
         onTap: () {
           Navigator.of(context).pushNamed('/PessoasDetail', arguments: pessoa);
         },
-        subtitle: Text(telefone),
+        subtitle: Text(pessoa.telefone),
         trailing: Container(
           width: 192,
           child: Row(
             children: [
               iconEditButton(() {
                 goToForm(context, pessoa);
-              }),
-              iconImovelButton(() {
-                goToImovel(context, pessoa);
               }),
               iconDelAtivButton(() {
                 if (pessoa.status == 1) {
@@ -230,8 +244,14 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
           ),
         ),
       );
-  //Widget para quando a pessoa for proprietário
-  Widget buildPessoasProp(Pessoas pessoa) => ListTile(
+  //Widget para novos cadastros que não possuem locação e que não seja proprietario
+  Widget buildPessoasContato(WrapPessoas pessoa) => ListTile(
+        /*leading: Image.network(
+          pessoa.urlAvatar,
+          fit: BoxFit.cover,
+          width: 50,
+          height: 50,
+        ),*/
         leading: CircleAvatar(
           backgroundColor: Colors.grey.shade300,
           child: Text(pessoa.nome.substring(0, 1)),
@@ -240,20 +260,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
         onTap: () {
           Navigator.of(context).pushNamed('/PessoasDetail', arguments: pessoa);
         },
-        subtitle: Text(telefone),
+        subtitle: Text(pessoa.telefone),
         trailing: Container(
           width: 192,
           child: Row(
             children: [
               iconEditButton(() {
                 goToForm(context, pessoa);
-              }),
-              iconPagtoButton(() {
-                if (int.parse(pg) == 0) {
-                  goToListaPagamentos(context, pessoa);
-                } else {
-                  goToFormPagto(context, pessoa);
-                }
               }),
               iconDelAtivButton(() {
                 if (pessoa.status == 1) {
@@ -262,8 +275,37 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                   reativar(pessoa.idpessoa, context);
                 }
               }),
-              iconListarPgButton(() {
-                goToListaPagamentos(context, pessoa);
+            ],
+          ),
+        ),
+      );
+  //Widget para quando a pessoa for proprietário
+  Widget buildPessoasProp(WrapPessoas pessoa) => ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.shade300,
+          child: Text(pessoa.nome.substring(0, 1)),
+        ),
+        title: Text(pessoa.nome),
+        onTap: () {
+          Navigator.of(context).pushNamed('/PessoasDetail', arguments: pessoa);
+        },
+        subtitle: Text(pessoa.telefone),
+        trailing: Container(
+          width: 192,
+          child: Row(
+            children: [
+              iconEditButton(() {
+                goToForm(context, pessoa);
+              }),
+              iconDelAtivButton(() {
+                if (pessoa.status == 1) {
+                  remove(pessoa.idpessoa, context);
+                } else {
+                  reativar(pessoa.idpessoa, context);
+                }
+              }),
+              iconImovelButton(() {
+                goToImovel(context, pessoa);
               }),
             ],
           ),
@@ -274,15 +316,15 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
 
   void remove(int idpessoa, BuildContext context) {}
 
-  void goToFormPagto(BuildContext context, Pessoas pessoa) {
+  void goToFormPagto(BuildContext context, WrapPessoas pessoa) {
     Navigator.of(context).pushNamed('/Pagamentos', arguments: pessoa);
   }
 
-  void goToListaPagamentos(BuildContext context, Pessoas pessoa) {
+  void goToListaPagamentos(BuildContext context, WrapPessoas pessoa) {
     Navigator.of(context).pushNamed('/PagamentosPessoa', arguments: pessoa);
   }
 
-  void goToImovel(BuildContext context, Pessoas pessoa) {
+  void goToImovel(BuildContext context, WrapPessoas pessoa) {
     ImovelWrap imv = ImovelWrap();
     imv.idproprietario = pessoa.idpessoa;
     imv.idpessoa = pessoa.idpessoa;
@@ -291,12 +333,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
     Navigator.of(context).pushNamed(NomedasRotas.IMOVELFORM, arguments: imv);
   }
 
-  void goToForm(BuildContext context, Pessoas pessoa) {
+  void goToForm(BuildContext context, WrapPessoas pessoa) {
+    print(pessoa);
     Navigator.of(context)
         .pushNamed(NomedasRotas.PESSOASFORM, arguments: pessoa);
   }
 
-  void goToFormDetal(BuildContext context, Pessoas pessoa) {
+  void goToFormDetal(BuildContext context, WrapPessoas pessoa) {
     Navigator.of(context).pushNamed(NomedasRotas.PESSOASDETAIL);
   }
 }

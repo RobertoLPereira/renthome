@@ -114,7 +114,7 @@ final demos = [
   Demo(
     name: 'Contatos',
     route: '/Contatos',
-    builder: (context) => PessoaListPage(),
+    builder: (context) => FilterPessoasListPage(), //PessoaListPage(),
   ),
   Demo(
     name: 'Contatos-Form',

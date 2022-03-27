@@ -1,16 +1,16 @@
 import 'package:renthome/app/domain/services/pessoas_wrap_service.dart';
 import 'package:renthome/src/models/pagamento/pagamentoPessoa.dart';
-import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 part 'pgpessoa_list_back.g.dart';
 
 class PgPessoaListBack = _PgPessoaListBack with _$PgPessoaListBack;
 
 abstract class _PgPessoaListBack with Store {
-  PessoasWrap pessoasWrap;
+  WrapPessoas pessoasWrap;
   var _service = GetIt.I.get<PessoasWrapService>();
 
   //lista de pagamentos da pessoa
@@ -24,7 +24,7 @@ abstract class _PgPessoaListBack with Store {
 
   _PgPessoaListBack(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
-    pessoasWrap = (parameter == null) ? PessoasWrap() : parameter;
+    pessoasWrap = (parameter == null) ? WrapPessoas() : parameter;
     refreshList(pessoasWrap.idpessoa);
   }
 }

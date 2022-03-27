@@ -69,7 +69,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
   }
 
   @override
-  save(PessoasWrap pessoasWrap) async {
+  save(WrapPessoas pessoasWrap) async {
     print('salvar pessoa');
     var headers = {'Content-Type': 'application/json'};
     var pessoasWrapJson = jsonEncode({
@@ -122,16 +122,17 @@ class PessoasWrapApi implements PessoasWrapDAO {
   Future<List<PagamentosPessoa>> listar(idpessoa) async {
     var uri = Uri.parse(
         'https://apialugueis.herokuapp.com/Consultar/$vw_pagamentosPessoa where p.idpessoa=$idpessoa');
+    print(uri);
     var response = await http.get(uri);
-    //print(response.body);
+
     Iterable listDart = json.decode(response.body);
     var listaPagtosPessoa = List<PagamentosPessoa>.from(listDart.map((map) =>
         PagamentosPessoa(
             idpagamento: map['idpagamento'],
             datapagamento: map['datapagamento'],
-            valorpago: map['valorpago'],
-            juros: map['juros'],
-            desconto: map['desconto'],
+            valorpago: double.tryParse(map['valorpago']),
+            juros: double.tryParse(map['juros']),
+            desconto: double.tryParse(map['desconto']),
             idcontrato: map['idcontrato'],
             idpessoa: map['idpessoa'],
             nome: map['nome'],
@@ -142,7 +143,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
             urlAvatar: map['url_avatar'],
             email: map['email'],
             idlocatario: map['idlocatario'])));
-//
+    print(listaPagtosPessoa.toString());
     return listaPagtosPessoa;
   }
 }
