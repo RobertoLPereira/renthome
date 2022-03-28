@@ -191,8 +191,8 @@ class _ImovelFormState extends State<ImovelForm> {
         ));
   }
 
-  final uriREST = Uri.parse(
-      'https://apialugueis.herokuapp.com/Consultar/select * from pessoas order by nome');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis +
+      '/Consultar/select * from pessoas order by nome');
 
   int idpessoa;
   var url;

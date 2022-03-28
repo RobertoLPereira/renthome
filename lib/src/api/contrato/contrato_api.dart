@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/contrato/contrato.dart';
 import '../../../src/models/interfaces/contrato_interface.dart';
 import 'package:uno/uno.dart';
 
 class ContratoApi implements ContratoDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/contrato');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/contrato');
 
   @override
   Future<List<Contrato>> find() async {
@@ -34,7 +35,7 @@ class ContratoApi implements ContratoDAO {
   ContratoApi(this.uno);
   Future<List<Contrato>> fetchContrato() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Contrato');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Contrato');
     final lista = response.data as List;
     final listaContrato = lista.map((e) => Contrato.fromMap(e)).toList();
     return listaContrato;
@@ -42,7 +43,7 @@ class ContratoApi implements ContratoDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/contrato/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/contrato/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

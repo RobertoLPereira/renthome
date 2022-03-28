@@ -214,7 +214,8 @@ import '../../models/pessoas/pessoas.dart';
 
 class WrapPessoasApi {
   static const Api_Alugueis =
-      'https://apialugueis.herokuapp.com/Consultar/Select * from pessoas';
+      NomeServidoresApi.Api_Alugueis +
+      '/Consultar/Select * from pessoas';
 
   static Future<List<Pessoas>> getPessoas(String query) async {
     var resposta = await http.get(Uri.parse(Api_Alugueis));

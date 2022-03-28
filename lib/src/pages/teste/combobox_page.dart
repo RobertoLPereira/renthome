@@ -5,6 +5,8 @@ import 'package:renthome/src/models/pessoas/pessoas.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../nomedosservidores.dart';
+
 class ComboboxPage extends StatefulWidget {
   @override
   _ComboboxPageState createState() => _ComboboxPageState();
@@ -144,7 +146,7 @@ class _ComboboxPageState extends State<ComboboxPage> {
   List statesList;
   String _myState;
 
-  String stateInfoUrl = 'https://apialugueis.herokuapp.com/Pessoas';
+  String stateInfoUrl = NomeServidoresApi.Api_Alugueis + '/Pessoas';
 
   // ignore: missing_return
   Future<String> _getStateList() async {
@@ -169,7 +171,7 @@ class _ComboboxPageState extends State<ComboboxPage> {
   List citiesList;
   String _myCity;
 
-  String cityInfoUrl = 'https://apialugueis.herokuapp.com/Imovel/';
+  String cityInfoUrl = NomeServidoresApi.Api_Alugueis + '/Imovel/';
   // ignore: missing_return
   Future<String> _getCitiesList(String url) async {
     final uriREST = Uri.parse(url);

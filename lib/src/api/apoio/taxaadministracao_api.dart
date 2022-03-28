@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/apoio/taxaadministracao.dart';
 import '../../../src/models/interfaces/apoio/taxaadministracao_interface.dart';
 import 'package:uno/uno.dart';
 
 class TaxaadministracaoApi implements TaxaadministracaoDAO {
   final uriREST =
-      Uri.parse('https://apialugueis.herokuapp.com/taxaadministracao');
+      Uri.parse(NomeServidoresApi.Api_Alugueis + '/taxaadministracao');
 
   @override
   Future<List<Taxaadministracao>> find() async {
@@ -31,7 +32,7 @@ class TaxaadministracaoApi implements TaxaadministracaoDAO {
   TaxaadministracaoApi(this.uno);
   Future<List<Taxaadministracao>> fetchTaxaadministracao() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Taxaadministracao');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Taxaadministracao');
     final lista = response.data as List;
     final listaTaxaadministracao =
         lista.map((e) => Taxaadministracao.fromMap(e)).toList();
@@ -41,7 +42,7 @@ class TaxaadministracaoApi implements TaxaadministracaoDAO {
   @override
   remove(id) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/taxaadministracao/$id');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/taxaadministracao/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

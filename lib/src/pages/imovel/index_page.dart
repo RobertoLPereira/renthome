@@ -7,6 +7,8 @@ import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../nomedosservidores.dart';
+
 class IndexPage extends StatefulWidget {
   @override
   _IndexPageState createState() => _IndexPageState();
@@ -14,7 +16,7 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> {
   final uriREST = Uri.parse(
-      'https://apialugueis.herokuapp.com/Consultar/' + vw_listacontatosWrap);
+      NomeServidoresApi.Api_Alugueis + '/Consultar/' + vw_listacontatosWrap);
   var primary = Color(0xff4f359b);
   var white = Color(0xffffffff);
   var listPessoasWrap;

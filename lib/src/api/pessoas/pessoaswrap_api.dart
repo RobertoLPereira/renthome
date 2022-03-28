@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:renthome/app/domain/interfaces/pessoas_wrap_dao.dart';
+import 'package:renthome/nomedosservidores.dart';
 import 'package:renthome/src/models/pagamento/pagamentoPessoa.dart';
 import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
@@ -9,8 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:uno/uno.dart';
 
 class PessoasWrapApi implements PessoasWrapDAO {
-  final uriREST = Uri.parse(
-      'https://apialugueis.herokuapp.com/Consultar/select * from  "vw_listacontatosWrap"');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis +
+      '/Consultar/select * from  "vw_listacontatosWrap"');
 
   @override
   Future<List<PessoasWrap>> find() async {
@@ -57,8 +58,8 @@ class PessoasWrapApi implements PessoasWrapDAO {
 
   PessoasWrapApi(this.uno);
   Future<List<PessoasWrap>> fetchPessoasWrap() async {
-    final response = await uno.get(
-        'https://apialugueis.herokuapp.com/Consultar/ select * from  "vw_listacontatosWrap"');
+    final response = await uno.get(NomeServidoresApi.Api_Alugueis +
+        '/Consultar/ select * from  "vw_listacontatosWrap"');
     final lista = response.data as List;
     print('api');
     print(response.data.toString());
@@ -84,7 +85,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
     });
     //print(pessoasWrap.idpessoa);
     int statusCode = 0;
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Pessoas');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Pessoas');
     if (pessoasWrap.idpessoa == null) {
       //print(pessoasWrapJson);
       var resposta =
@@ -102,7 +103,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
   @override
   reativar(idpessoa) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/AtivarPessoa/$idpessoa');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/AtivarPessoa/$idpessoa');
     var resposta = await http.put(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -112,7 +113,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
   remove(idpessoa) async {
     print(idpessoa);
     var uri = Uri.parse(
-        'https://apialugueis.herokuapp.com/DesativarPessoa/$idpessoa');
+        NomeServidoresApi.Api_Alugueis + '/DesativarPessoa/$idpessoa');
     var resposta = await http.put(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -120,8 +121,8 @@ class PessoasWrapApi implements PessoasWrapDAO {
 
   @override
   Future<List<PagamentosPessoa>> listar(idpessoa) async {
-    var uri = Uri.parse(
-        'https://apialugueis.herokuapp.com/Consultar/$vw_pagamentosPessoa where p.idpessoa=$idpessoa');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis +
+        '/Consultar/$vw_pagamentosPessoa where p.idpessoa=$idpessoa');
     print(uri);
     var response = await http.get(uri);
 

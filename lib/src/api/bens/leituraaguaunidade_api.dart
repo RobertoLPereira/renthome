@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/bens/leituraaguaunidade.dart';
 import '../../../src/models/interfaces/bens/leituraaguaunidade_interface.dart';
 import 'package:uno/uno.dart';
 
 class LeituraaguaunidadeApi implements LeituraaguaunidadeDAO {
   final uriREST =
-      Uri.parse('https://apialugueis.herokuapp.com/Leituraaguaunidade');
+      Uri.parse(NomeServidoresApi.Api_Alugueis + '/Leituraaguaunidade');
 
   @override
   Future<List<LeituraAguaUnidade>> find() async {
@@ -34,7 +35,7 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeDAO {
   LeituraaguaunidadeApi(this.uno);
   Future<List<LeituraAguaUnidade>> fetchLeituraaguaunidade() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Leituraaguaunidade');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Leituraaguaunidade');
     final lista = response.data as List;
     final listaLeituraaguaunidade =
         lista.map((e) => LeituraAguaUnidade.fromMap(e)).toList();
@@ -44,7 +45,7 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeDAO {
   @override
   remove(id) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/leituraaguaunidade/$id');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/leituraaguaunidade/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

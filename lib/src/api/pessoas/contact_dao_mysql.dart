@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/interfaces/pessoas/contact_dao.dart';
 import '../../../src/models/pessoas/contact.dart';
 
 class ContactDAOMySQL implements ContactDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Contact');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact');
 
   @override
   Future<List<Contact>> find() async {
@@ -28,7 +29,7 @@ class ContactDAOMySQL implements ContactDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -57,7 +58,7 @@ class ContactDAOMySQL implements ContactDAO {
           await http.post(uriREST, headers: headers, body: contactJson);
       statusCode = resposta.statusCode;
     } else {
-      var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact');
+      var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact');
       //print(uri);
       var resposta = await http.put(uri, headers: headers, body: contactJson);
       statusCode = resposta.statusCode;

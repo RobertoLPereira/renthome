@@ -1,11 +1,10 @@
+import 'package:get_it/get_it.dart';
 import 'package:renthome/app/domain/entities/unidade_imovel.dart';
 import 'package:renthome/app/domain/exception/domain_layer_exception.dart';
 import 'package:renthome/src/models/interfaces/bens/imovelunidade_interface.dart';
-import 'package:get_it/get_it.dart';
 
 class UnidadeImovelService {
-  //Manter a Unidade do imovel (Inclui/Alterar/Consulta e Excluir)
-  var _interface = GetIt.I.get<ImovelUnidadeDAO>();
+  var _service = GetIt.I.get<ImovelUnidadeInterface>();
   //Incluir e alterar
   salvar(UnidadeImovel unid) async {
     print('Service =>');
@@ -16,17 +15,17 @@ class UnidadeImovelService {
     if (unid.status == 3) {
       validarLocatario(unid.idlocatario.toString());
     }
-    await _interface.save(unid);
+    await _service.save(unid);
   }
 
   //Excluir logicamente uma unidade
   Desativar(dynamic idunidade) async {
-    await _interface.remove(idunidade);
+    await _service.remove(idunidade);
   }
 
   //Ativar uma unidade de imóvel
   Ativar(dynamic idunidade) async {
-    await _interface.reativar(idunidade);
+    await _service.reativar(idunidade);
   }
 
   //Validar os dados antes de Incluir/Alterar
@@ -213,6 +212,12 @@ class UnidadeImovelService {
     } else if (email.length > max) {
       throw DomainLayerException(
           'O email deve possuir no máximo $max caracteres.');
+    }
+  }
+
+  validateIdLocador(String locador) {
+    if (int.parse(locador) < 1) {
+      throw DomainLayerException('O locador é obrigatório.');
     }
   }
 }

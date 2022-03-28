@@ -3,11 +3,13 @@ import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../../nomedosservidores.dart';
+
 class PagamentoService {
   Future<List<UnidadePagto>> findImovel(dynamic id) async {
     var condicao =
         vw_unidadepagadora + ' where un.idlocatario=' + id.toString();
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact/$condicao');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact/$condicao');
     var resposta = await http.get(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
     //print(resposta.body);

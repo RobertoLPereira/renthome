@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:renthome/src/models/apoio/categorias.dart';
+import '../../../nomedosservidores.dart';
 import '../../domain/interfaces/categoriadeimoveis_dao.dart';
 import 'package:http/http.dart' as http;
 
 class CategoriadeImoveisDAOMySQL implements CategoriadeImoveisDAO {
   final uriREST =
-      Uri.parse('https://apialugueis.herokuapp.com/Categoriadeimoveis');
+      Uri.parse(NomeServidoresApi.Api_Alugueis + '/Categoriadeimoveis');
 
   @override
   Future<List<Categorias>> find() async {
@@ -24,7 +25,7 @@ class CategoriadeImoveisDAOMySQL implements CategoriadeImoveisDAO {
   @override
   remove(id) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/Categoriadeimoveis/$id');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/Categoriadeimoveis/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -47,7 +48,8 @@ class CategoriadeImoveisDAOMySQL implements CategoriadeImoveisDAO {
           await http.post(uriREST, headers: headers, body: statusJson);
       statusCode = resposta.statusCode;
     } else {
-      var url = 'https://apialugueis.herokuapp.com/categoriadeimoveisM/' +
+      var url = NomeServidoresApi.Api_Alugueis +
+          '/categoriadeimoveisM/' +
           categoriadeimoveis.idcategoriadeimoveis.toString();
       var uri = Uri.parse(url);
       var resposta = await http.put(uri, headers: headers, body: statusJson);

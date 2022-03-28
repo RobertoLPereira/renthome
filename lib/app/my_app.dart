@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:renthome/app/api/imovelunidade_rest_api.dart';
 import 'package:renthome/src/api/apoio/categorias_api.dart';
 import 'package:renthome/src/api/apoio/faixadeconsumo_api.dart';
 import 'package:renthome/src/api/apoio/naturezarelacionamento_api.dart';
@@ -12,6 +13,7 @@ import 'package:renthome/src/pages/teste/demos.dart';
 import 'package:renthome/src/pages/teste/homepage.dart';
 import 'package:renthome/src/store/categoriadeimoveis_store.dart';
 import 'package:renthome/src/store/faixadeconsumo_store.dart';
+import 'package:renthome/src/store/imovelunidade_store.dart';
 import 'package:renthome/src/store/leituraaguaunidade_store.dart';
 import 'package:renthome/src/store/naturezarelacionamento_store.dart';
 import 'package:renthome/src/store/status_store.dart';
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
         Provider(create: (context) => FaixadeconsumoApi(context.read())),
         Provider(create: (context) => LeituraaguaunidadeApi(context.read())),
         Provider(create: (context) => LeituraDeConsumoApi()),
+        Provider(create: (context) => ImovelUnidadeRestApi(context.read())),
         ChangeNotifierProvider(
             create: (context) => StatusStore(context.read())),
         ChangeNotifierProvider(
@@ -45,6 +48,8 @@ class MyApp extends StatelessWidget {
             create: (context) => NaturezarelacionamentoStore(context.read())),
         ChangeNotifierProvider(
             create: (context) => LeituraaguaunidadeStore(context.read())),
+        ChangeNotifierProvider(
+            create: (context) => ImovelunidadeStore(context.read())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:renthome/app/domain/interfaces/faixadeconsumo_interface.dart';
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/apoio/faixadeconsumo.dart';
 import 'package:uno/uno.dart';
 
 class FaixadeconsumoApi implements FaixadeconsumoInterface {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Faixadeconsumo');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Faixadeconsumo');
 
   @override
   Future<List<Faixadeconsumo>> find() async {
@@ -32,7 +33,7 @@ class FaixadeconsumoApi implements FaixadeconsumoInterface {
   FaixadeconsumoApi(this.uno);
   Future<List<Faixadeconsumo>> fetchFaixadeconsumo() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Faixadeconsumo');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Faixadeconsumo');
     final lista = response.data as List;
     final listaFaixadeconsumo =
         lista.map((e) => Faixadeconsumo.fromMap(e)).toList();
@@ -41,7 +42,7 @@ class FaixadeconsumoApi implements FaixadeconsumoInterface {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/faixadeconsumo/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/faixadeconsumo/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

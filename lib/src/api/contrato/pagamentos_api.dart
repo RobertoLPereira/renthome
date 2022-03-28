@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:renthome/src/models/pagamento/unidade_pagamento.dart';
 import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/interfaces/pagamentos_interface.dart';
 import '../../../src/models/pagamento/pagamentos.dart';
 import 'package:uno/uno.dart';
 
 class PagamentosApi implements PagamentosDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Pagamentos');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Pagamentos');
 
   @override
   Future<List<Pagamentos>> find() async {
@@ -32,7 +33,7 @@ class PagamentosApi implements PagamentosDAO {
   PagamentosApi(this.uno);
   Future<List<Pagamentos>> fetchPagamentos() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Pagamentos');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Pagamentos');
     final lista = response.data as List;
     final listaPagamentos = lista.map((e) => Pagamentos.fromMap(e)).toList();
     return listaPagamentos;
@@ -40,7 +41,7 @@ class PagamentosApi implements PagamentosDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Pagamentos/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Pagamentos/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }
@@ -73,12 +74,10 @@ class PagamentosApi implements PagamentosDAO {
   Future<List<UnidadePagto>> buscarPagamentos(id) async {
     var condicao =
         vw_unidadepagadora + ' where un.idlocatario=' + id.toString();
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact/$condicao');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact/$condicao');
     var resposta = await http.get(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
-    //print(resposta.body);
     Iterable listDart = json.decode(resposta.body);
-    //print(listDart);
     var listUnidadePagto = List<UnidadePagto>.from(listDart.map((map) =>
         UnidadePagto(
             idcontrato: map['idcontrato'],
@@ -89,9 +88,9 @@ class PagamentosApi implements PagamentosDAO {
             datacontrato: map['datacontrato'],
             status: map['status'],
             validadecontrato: map['validadecontrato'],
-            valor: map['valor'],
-            taxacondominio: map['taxacondominio'],
-            valordecaucao: map['valordecaucao'],
+            valor: double.tryParse(map['valor']),
+            taxacondominio: double.tryParse(map['taxacondominio']),
+            valordecaucao: double.tryParse(map['valordecaucao']),
             idunidade: map['idunidade'],
             idimovel: map['idimovel'],
             descricao: map['descricao'],

@@ -4,12 +4,13 @@ import 'dart:convert';
 import 'package:renthome/app/domain/interfaces/natrelac_dao.dart';
 import 'package:renthome/src/models/interfaces/apoio/naturezarelacionamento_interface.dart';
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/apoio/naturezarelacionamentos.dart';
 import 'package:uno/uno.dart';
 
 class NaturezarelacionamentoApi implements NaturezarelacionamentoDAO {
   final uriREST =
-      Uri.parse('https://apialugueis.herokuapp.com/Naturezarelacionamento');
+      Uri.parse(NomeServidoresApi.Api_Alugueis + '/Naturezarelacionamento');
   final Uno uno;
 
   NaturezarelacionamentoApi(this.uno);
@@ -29,7 +30,7 @@ class NaturezarelacionamentoApi implements NaturezarelacionamentoDAO {
 
   Future<List<Naturezarelacionamento>> fetchNaturezarelacionamento() async {
     final response = await uno
-        .get('https://apialugueis.herokuapp.com/Naturezarelacionamento');
+        .get(NomeServidoresApi.Api_Alugueis + '/Naturezarelacionamento');
     final lista = response.data as List;
     final listaNaturezarelacionamento =
         lista.map((e) => Naturezarelacionamento.fromMap(e)).toList();
@@ -39,7 +40,7 @@ class NaturezarelacionamentoApi implements NaturezarelacionamentoDAO {
   @override
   remove(id) async {
     var uri = Uri.parse(
-        'https://apialugueis.herokuapp.com/naturezarelacionamentoM/$id');
+        NomeServidoresApi.Api_Alugueis + '/naturezarelacionamentoM/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }
@@ -58,9 +59,9 @@ class NaturezarelacionamentoApi implements NaturezarelacionamentoDAO {
           headers: headers, body: naturezarelacionamentoJson);
       statusCode = resposta.statusCode;
     } else {
-      var uriREST2 = Uri.parse(
-          'https://apialugueis.herokuapp.com/naturezarelacionamentoM/' +
-              naturezarelacionamento.id.toString());
+      var uriREST2 = Uri.parse(NomeServidoresApi.Api_Alugueis +
+          '/naturezarelacionamentoM/' +
+          naturezarelacionamento.id.toString());
       var resposta = await http.put(uriREST2,
           headers: headers, body: naturezarelacionamentoJson);
       statusCode = resposta.statusCode;

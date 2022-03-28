@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import '../../../nomedosservidores.dart';
 import '../../../src/models/interfaces/apoio/centrocusto_interface.dart';
 import 'package:http/http.dart' as http;
 import '../../../src/models/apoio/centrocusto.dart';
 import 'package:uno/uno.dart';
 
 class CentrocustoApi implements CentrocustoDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/centrocusto');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/centrocusto');
 
   @override
   Future<List<Centrocusto>> find() async {
@@ -28,7 +29,7 @@ class CentrocustoApi implements CentrocustoDAO {
   CentrocustoApi(this.uno);
   Future<List<Centrocusto>> fetchCentrocusto() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Centrocusto');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Centrocusto');
     final lista = response.data as List;
     final listaCentrocusto = lista.map((e) => Centrocusto.fromMap(e)).toList();
     return listaCentrocusto;
@@ -36,7 +37,7 @@ class CentrocustoApi implements CentrocustoDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/centrocusto/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/centrocusto/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

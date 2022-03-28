@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/interfaces/vinculos_interface.dart';
 import '../../../src/models/pessoas/vinculos.dart';
 import 'package:uno/uno.dart';
 
 class VinculosApi implements VinculosDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/vinculos');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/vinculos');
 
   @override
   Future<List<Vinculos>> find() async {
@@ -29,7 +30,7 @@ class VinculosApi implements VinculosDAO {
   VinculosApi(this.uno);
   Future<List<Vinculos>> fetchVinculos() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/Vinculos');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/Vinculos');
     final lista = response.data as List;
     final listaVinculos = lista.map((e) => Vinculos.fromMap(e)).toList();
     return listaVinculos;
@@ -37,7 +38,7 @@ class VinculosApi implements VinculosDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/vinculos/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/vinculos/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }

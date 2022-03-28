@@ -36,10 +36,10 @@ class _PanelLeftPageState extends State<PanelLeftPage> {
             '/Consultar/select * from "vw_unidades_em_dia_mescorrente"';
         try {
           var response = await http.get(Uri.tryParse(url));
-          print(response.body);
+
           if (response.statusCode == 200) {
             Iterable listDart = json.decode(response.body);
-            print(response.body);
+
             setState(() {
               for (Map<String, dynamic> map in listDart) {
                 _todos.add(Todo(name: (map['name']), enable: true));

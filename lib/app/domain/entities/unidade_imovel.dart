@@ -7,20 +7,25 @@ class UnidadeImovel {
   String descricao;
   String status;
   String idimovelcategoria;
-  String nome;
-  String endereco;
   String nomeimovel;
+  String endereco;
+  int idproprietario;
+  int situacaoimovel;
+  String nome;
+  UnidadeImovel({
+    this.idunidade,
+    this.idimovel,
+    this.idlocatario,
+    this.descricao,
+    this.status,
+    this.idimovelcategoria,
+    this.nomeimovel,
+    this.endereco,
+    this.idproprietario,
+    this.situacaoimovel,
+    this.nome,
+  });
 
-  UnidadeImovel(
-      {this.idunidade,
-      this.idimovel,
-      this.idlocatario,
-      this.descricao,
-      this.status,
-      this.idimovelcategoria,
-      this.nome,
-      this.endereco,
-      this.nomeimovel});
   Map<String, dynamic> toMap() {
     return {
       'idunidade': idunidade,
@@ -29,9 +34,11 @@ class UnidadeImovel {
       'descricao': descricao,
       'status': status,
       'idimovelcategoria': idimovelcategoria,
-      'nome': nome,
+      'nomeimovel': nomeimovel,
       'endereco': endereco,
-      'nomeimovel': nomeimovel
+      'idproprietario': idproprietario,
+      'situacaoimovel': situacaoimovel,
+      'nome': nome
     };
   }
 
@@ -43,9 +50,11 @@ class UnidadeImovel {
       descricao: map['descricao'],
       status: map['status'],
       idimovelcategoria: map['idimovelcategoria'],
-      nome: map['nome'],
-      endereco: map['endereco'],
       nomeimovel: map['nomeimovel'],
+      endereco: map['endereco'],
+      idproprietario: map['idproprietario'],
+      situacaoimovel: map['situacaoimovel'],
+      nome: map['nome'],
     );
   }
 
@@ -54,7 +63,8 @@ class UnidadeImovel {
   factory UnidadeImovel.fromJson(String source) =>
       UnidadeImovel.fromMap(json.decode(source));
   @override
+  @override
   String toString() {
-    return 'UnidadeImovel(idunidade:$idunidade,idimovel:$idimovel,idlocatario:$idlocatario,descricao:$descricao,status:$status,idimovelcategoria:$idimovelcategoria,nome:$nome,endereco:$endereco,nomeimovel:$nomeimovel)';
+    return 'UnidadeImovel(idunidade: $idunidade, idimovel: $idimovel, idlocatario: $idlocatario, descricao: $descricao, status: $status, idimovelcategoria: $idimovelcategoria, nomeimovel: $nomeimovel, endereco: $endereco, idproprietario: $idproprietario, situacaoimovel: $situacaoimovel, nome: $nome)';
   }
 }

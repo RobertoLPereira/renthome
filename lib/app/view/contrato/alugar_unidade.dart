@@ -241,7 +241,8 @@ import '../../models/alugar/alugar.dart';
 
 class WrapAlugarApi {
   static const Api_Alugueis =
-      'https://apialugueis.herokuapp.com/Consultar/Select * from alugar';
+      NomeServidoresApi.Api_Alugueis +
+      '/Consultar/Select * from alugar';
 
   static Future<List<Alugar>> getAlugar(String query) async {
     var resposta = await http.get(Uri.parse(Api_Alugueis));

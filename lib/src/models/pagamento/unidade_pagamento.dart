@@ -9,9 +9,9 @@ class UnidadePagto {
   String datacontrato;
   int status;
   String validadecontrato;
-  int valor;
-  Null taxacondominio;
-  Null valordecaucao;
+  double valor;
+  double taxacondominio;
+  double valordecaucao;
   int idunidade;
   int idimovel;
   String descricao;

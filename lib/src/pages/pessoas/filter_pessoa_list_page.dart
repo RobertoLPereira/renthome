@@ -158,7 +158,6 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                 itemCount: pessoas.length,
                 itemBuilder: (context, index) {
                   final pessoa = pessoas[index];
-                  print(pessoa.nome.toString());
                   if (pessoa.proprietario == null) {
                     proprietario = false;
                   } else {
@@ -174,14 +173,11 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                   }
                   ativo = pessoa.status;
                   if (pessoa.proprietario) {
-                    print('tem contrato $pessoa.idcontrato');
                     return buildPessoasProp(pessoa);
                   } else {
                     if (pessoa.idcontrato == 0) {
-                      print('proprietario $pessoa.idcontrato');
                       return buildPessoasContato(pessoa);
                     } else {
-                      print('nao tem contrato $pessoa.idcontrato');
                       return buildPessoasWrap(pessoa);
                     }
                   }
@@ -334,7 +330,6 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
   }
 
   void goToForm(BuildContext context, WrapPessoas pessoa) {
-    print(pessoa);
     Navigator.of(context)
         .pushNamed(NomedasRotas.PESSOASFORM, arguments: pessoa);
   }

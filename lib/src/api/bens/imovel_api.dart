@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:renthome/nomedosservidores.dart';
 import 'package:renthome/src/models/bens/imovelWrap.dart';
 import 'package:renthome/src/models/bens/imovelunidade.dart';
 import 'package:renthome/src/models/interfaces/bens/imovel_interface.dart';
@@ -10,13 +11,13 @@ import '../../../src/models/bens/imovel.dart';
 import 'package:uno/uno.dart';
 
 class ImovelApi implements ImovelDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Imovel');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Imovel');
 
   @override
   Future<List<ImovelWrap>> find() async {
     //print('vou buscar lista de imoveis');
     var uri = Uri.parse(
-        'https://apialugueis.herokuapp.com/Consultar/$vw_imoveilWrap');
+        NomeServidoresApi.Api_Alugueis + '/Consultar/$vw_imoveilWrap');
     var resposta = await http.get(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API. Imovel ');
     Iterable listDart = json.decode(resposta.body);
@@ -43,7 +44,7 @@ class ImovelApi implements ImovelDAO {
 
   ImovelApi(this.uno);
   Future<List<Imovel>> fetchImovel() async {
-    final response = await uno.get('https://apialugueis.herokuapp.com/Imovel');
+    final response = await uno.get(NomeServidoresApi.Api_Alugueis + '/Imovel');
     final lista = response.data as List;
     final listaImovel = lista.map((e) => Imovel.fromMap(e)).toList();
     return listaImovel;
@@ -88,7 +89,7 @@ class ImovelApi implements ImovelDAO {
   @override
   Future<List<Imovelunidade>> listar(idimovel) async {
     final response = await uno
-        .get('https://apialugueis.herokuapp.com/Unidadeimovel/$idimovel');
+        .get(NomeServidoresApi.Api_Alugueis + '/Unidadeimovel/$idimovel');
     final lista = response.data as List;
     final listaImovel = lista.map((e) => Imovelunidade.fromMap(e)).toList();
     return listaImovel;
@@ -97,7 +98,7 @@ class ImovelApi implements ImovelDAO {
   @override
   remove(id) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/DesativarImovel/$id');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/DesativarImovel/$id');
     var resposta = await http.put(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Desativar. $resposta.statusCode');
@@ -105,7 +106,7 @@ class ImovelApi implements ImovelDAO {
 
   @override
   reativar(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/AtivarImovel/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/AtivarImovel/$id');
     var resposta = await http.put(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Reativa. $resposta.statusCode');

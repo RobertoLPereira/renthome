@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import 'alugar_unidade_imovel_form_back.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _AlugarUnidadeImovelFormState extends State<AlugarUnidadeImovelForm> {
   final _form = GlobalKey<FormState>();
   bool isLoading = false;
   List<dynamic> inquilino = [];
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Pessoas');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Pessoas');
 
   //Definição das propriedades dos campos do formulário
   Widget fieldIdunidade(AlugarUnidadeImovelFormBack back) {
@@ -25,6 +26,17 @@ class _AlugarUnidadeImovelFormState extends State<AlugarUnidadeImovelForm> {
         initialValue: back.ctr.idunidade.toString(),
         decoration: InputDecoration(
           labelText: 'Unidade:',
+        ));
+  }
+
+  Widget fieldIdlocador(AlugarUnidadeImovelFormBack back) {
+    return TextFormField(
+        enabled: false,
+        validator: back.validateProprietario,
+        onSaved: (newValue) => back.ctr.idlocador,
+        initialValue: back.ctr.idlocador.toString(),
+        decoration: InputDecoration(
+          labelText: 'Locador:',
         ));
   }
 
@@ -177,12 +189,10 @@ class _AlugarUnidadeImovelFormState extends State<AlugarUnidadeImovelForm> {
             });
           },
           items: inquilino?.map((item) {
-                //if (item['proprietario']) {
                 return new DropdownMenuItem(
                   child: new Text(item['nome']),
                   value: item['idpessoa'].toString(),
                 );
-                //}
               })?.toList() ??
               [],
         ),

@@ -19,7 +19,7 @@ class ImovelUnidadeListBack = _ImovelUnidadeListBack
     with _$ImovelUnidadeListBack;
 
 abstract class _ImovelUnidadeListBack with Store {
-  var _service = GetIt.I.get<ImovelUnidadeDAO>();
+  var _service = GetIt.I.get<ImovelUnidadeInterface>();
 
   //lista de contatos
   @observable
@@ -53,7 +53,7 @@ abstract class _ImovelUnidadeListBack with Store {
   goToAlugarUnidades(BuildContext context, UnidadeImovel unidade) {
     ContratoWrap ctr = ContratoWrap();
     ctr.idlocatario = (unidade.idlocatario);
-    ctr.idlocador = 1;
+    ctr.idlocador = unidade.idproprietario;
     ctr.idunidadeimovel = int.parse(unidade.idunidade);
     ctr.proprietario = false;
     ctr.status_pessoa = 1;

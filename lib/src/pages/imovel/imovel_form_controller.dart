@@ -4,10 +4,11 @@ import 'package:renthome/app/domain/entities/unidade_imovel.dart';
 import 'package:renthome/app/domain/exception/domain_layer_exception.dart';
 import 'package:renthome/src/models/bens/imovelWrap.dart';
 import 'package:renthome/src/models/interfaces/bens/imovel_interface.dart';
-import 'package:renthome/src/models/interfaces/bens/imovelunidade_interface.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
+import 'package:renthome/src/models/interfaces/bens/imovelunidade_interface.dart';
 
 import '../../../src/models/bens/imovel.dart';
 
@@ -15,7 +16,7 @@ class ImovelFormController {
   Imovel imovel;
   ImovelWrap imovelwrap;
   var _service = GetIt.I.get<ImovelDAO>();
-  var _serviceUnid = GetIt.I.get<ImovelUnidadeDAO>();
+  var _serviceUnid = GetIt.I.get<ImovelUnidadeInterface>();
 
   bool _descricaoIsValid;
   bool _enderecoIsValid;

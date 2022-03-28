@@ -30,7 +30,6 @@ import 'package:get_it/get_it.dart';
 import 'database/mysql/status_dao_mysql.dart';
 import 'database/postgres/categoriadeimoveis_dao_mysql.dart';
 import 'domain/interfaces/faixadeconsumo_interface.dart';
-import 'domain/interfaces/imovelunidade_interface.dart';
 import 'domain/interfaces/leituraaguaunidade_interface.dart';
 import 'domain/interfaces/pagamento_dao.dart';
 import 'domain/interfaces/pessoas_wrap_dao.dart';
@@ -67,7 +66,7 @@ setupInjection() async {
   getIt.registerSingleton<ImovelDAO>(ImovelApi(uno));
   getIt.registerSingleton<ImovelInterface>(ImovelRestApi(uno));
   getIt.registerSingleton<ImovelWrapService>(ImovelWrapService());
-  getIt.registerSingleton<ImovelUnidadeDAO>(ImovelunidadeApi(uno));
+  getIt.registerSingleton<ImovelUnidadeInterface>(ImovelunidadeApi(uno));
   getIt.registerSingleton<UnidadeImovelService>(UnidadeImovelService());
   getIt.registerSingleton<LeituraaguaunidadeInterface>(
       LeituraaguaunidadeApi(uno));

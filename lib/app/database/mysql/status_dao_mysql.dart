@@ -1,10 +1,11 @@
 import 'dart:convert';
 import '../../../app/domain/interfaces/statust_dao.dart';
+import '../../../nomedosservidores.dart';
 import '../../domain/entities/status.dart';
 import 'package:http/http.dart' as http;
 
 class StatusDAOMySQL implements StatusDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Status');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Status');
 
   @override
   Future<List<Status>> find() async {
@@ -21,7 +22,7 @@ class StatusDAOMySQL implements StatusDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Status/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Status/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -42,7 +43,7 @@ class StatusDAOMySQL implements StatusDAO {
           await http.post(uriREST, headers: headers, body: statusJson);
       statusCode = resposta.statusCode;
     } else {
-      var uri = Uri.parse('https://apialugueis.herokuapp.com/Status');
+      var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Status');
       //print(uri);
       var resposta = await http.put(uri, headers: headers, body: statusJson);
       statusCode = resposta.statusCode;

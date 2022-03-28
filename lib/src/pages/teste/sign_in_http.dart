@@ -8,6 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../nomedosservidores.dart';
 import '../../../widget_tree.dart';
 
 part 'sign_in_http.g.dart';
@@ -161,7 +162,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
         .replaceAll(")", "")
         .replaceAll("-", "");
     var result = await http.get(
-        Uri.parse('https://apialugueis.herokuapp.com/ValidarLogin/' + tel));
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/ValidarLogin/' + tel));
     if (result.statusCode == 204) {
       _showDialog('Successfully signed in.');
       await shp.setString('Token', tel);

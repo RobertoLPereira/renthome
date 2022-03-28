@@ -4,10 +4,12 @@ import 'package:renthome/src/models/apoio/gera_mvc_flutter.dart';
 import 'package:renthome/src/utils/vw_gera_mvc.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../nomedosservidores.dart';
+
 class GeraMvcFlutterApi {
-  final uriREST = Uri.parse(
-      'https://apialugueis.herokuapp.com/Consultar/$gera_mvc_flutter' +
-          'imovel');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis +
+      '/Consultar/$gera_mvc_flutter' +
+      'imovel');
   var entidade;
   Future<String> find() async {
     var resposta = await http.get(uriREST);

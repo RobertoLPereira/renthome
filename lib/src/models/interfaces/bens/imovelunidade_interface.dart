@@ -1,6 +1,6 @@
 import 'package:renthome/app/domain/entities/unidade_imovel.dart';
 
-abstract class ImovelUnidadeDAO {
+abstract class ImovelUnidadeInterface {
   save(UnidadeImovel imovelunidade);
 
   remove(dynamic id);

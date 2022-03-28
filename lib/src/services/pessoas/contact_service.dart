@@ -2,17 +2,18 @@ import 'dart:convert';
 import 'package:renthome/src/models/pagamento/unidade_pagamento.dart';
 import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'package:uno/uno.dart';
+import '../../../nomedosservidores.dart';
 import '../../../src/models/pessoas/contact.dart';
 import '../../../src/models/exceptions/domainlayerexception.dart';
 import 'package:http/http.dart' as http;
 
 class ContactService {
   final Uno uno;
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Contact');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact');
   ContactService(this.uno);
 
   Future<List<Contact>> fetchPessoas() async {
-    final response = await uno.get('https://apialugueis.herokuapp.com/Contact');
+    final response = await uno.get(NomeServidoresApi.Api_Alugueis + '/Contact');
     final lista = response.data as List;
     final listaPessoas = lista.map((e) => Contact.fromMap(e)).toList();
     return listaPessoas;
@@ -21,7 +22,7 @@ class ContactService {
   Future<List<UnidadePagto>> findImovel(dynamic id) async {
     var condicao =
         vw_unidadepagadora + ' where un.idlocatario=' + id.toString();
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact/$condicao');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact/$condicao');
     var resposta = await http.get(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
     //print(resposta.body);
@@ -106,7 +107,7 @@ class ContactService {
   }
 
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -134,7 +135,7 @@ class ContactService {
           await http.post(uriREST, headers: headers, body: contactJson);
       statusCode = resposta.statusCode;
     } else {
-      var uri = Uri.parse('https://apialugueis.herokuapp.com/Contact');
+      var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Contact');
       //print(uri);
       var resposta = await http.put(uri, headers: headers, body: contactJson);
       statusCode = resposta.statusCode;

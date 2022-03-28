@@ -2,14 +2,16 @@ import 'dart:convert';
 
 import 'package:renthome/app/domain/entities/unidade_imovel.dart';
 import 'package:http/http.dart' as http;
-import '../../../src/models/interfaces/bens/imovelunidade_interface.dart';
+import 'package:renthome/nomedosservidores.dart';
+import 'package:renthome/src/models/interfaces/bens/imovelunidade_interface.dart';
 import 'package:uno/uno.dart';
 
-class ImovelunidadeApi implements ImovelUnidadeDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/ImovelUnidades');
+class ImovelunidadeApi implements ImovelUnidadeInterface {
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/ImovelUnidades');
 
   @override
   Future<List<UnidadeImovel>> find() async {
+    print(uriREST);
     var resposta = await http.get(uriREST);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
     //print(resposta.body);
@@ -25,6 +27,8 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
               nome: imovelunidade['nome'],
               endereco: imovelunidade['endereco'],
               nomeimovel: imovelunidade['nomeimovel'],
+              idproprietario: imovelunidade['idproprietario'],
+              situacaoimovel: imovelunidade['situacaoimovel'],
             )));
     return listImovelunidade;
   }
@@ -34,7 +38,7 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
   ImovelunidadeApi(this.uno);
   Future<List<UnidadeImovel>> fetchImovelunidade() async {
     final response =
-        await uno.get('https://apialugueis.herokuapp.com/ImovelUnidades');
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/ImovelUnidades');
     final lista = response.data as List;
     final listaImovelunidade =
         lista.map((e) => UnidadeImovel.fromMap(e)).toList();
@@ -44,7 +48,7 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
   @override
   remove(id) async {
     var uri =
-        Uri.parse('https://apialugueis.herokuapp.com/DesativarUnidade/$id');
+        Uri.parse(NomeServidoresApi.Api_Alugueis + '/DesativarUnidade/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }
@@ -87,7 +91,6 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
       throw Exception('Erro REST API.');
   }
 
-  @override
   Future<List<UnidadeImovel>> buscarImovelunidade() {
     // ignore: todo
     // TODO: implement buscarImovelunidade
@@ -96,7 +99,7 @@ class ImovelunidadeApi implements ImovelUnidadeDAO {
 
   @override
   reativar(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/AtivarUnidade/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/AtivarUnidade/$id');
     var resposta = await http.put(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Reativa Unidade. $resposta.statusCode');

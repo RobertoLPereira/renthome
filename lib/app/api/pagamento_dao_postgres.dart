@@ -5,8 +5,10 @@ import 'package:renthome/src/models/pagamento/pagamentos.dart';
 import 'package:renthome/src/utils/consultas_genericas.dart';
 import 'package:http/http.dart' as http;
 
+import '../../nomedosservidores.dart';
+
 class PagamentoDAOPostgres implements PagamentoDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/Pagamentos');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/Pagamentos');
 
   @override
   Future<List<Pagamentos>> find() async {
@@ -28,7 +30,7 @@ class PagamentoDAOPostgres implements PagamentoDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/pagamentosM/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/pagamentosM/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200)
       throw Exception('Erro REST API Remove. $resposta.statusCode');
@@ -57,7 +59,7 @@ class PagamentoDAOPostgres implements PagamentoDAO {
       statusCode = resposta.statusCode;
     } else {
       var uri = Uri.parse(
-          'https://apialugueis.herokuapp.com/pagamentosM/$Pagto.idpagamento');
+          NomeServidoresApi.Api_Alugueis + '/pagamentosM/$Pagto.idpagamento');
       //print(uri);
       var resposta = await http.put(uri, headers: headers, body: PagtoJson);
       statusCode = resposta.statusCode;
@@ -68,8 +70,8 @@ class PagamentoDAOPostgres implements PagamentoDAO {
 
   @override
   Future<List<PagamentosPessoa>> listar(idpessoa) async {
-    var uri = Uri.parse(
-        'https://apialugueis.herokuapp.com/Consultar/$vw_pagamentosPessoa where p.idpessoa=$idpessoa');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis +
+        '/Consultar/$vw_pagamentosPessoa where p.idpessoa=$idpessoa');
     var response = await http.delete(uri);
     final lista = response.body as List;
     final listaPagtosPessoa =

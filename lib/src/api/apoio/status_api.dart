@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../../nomedosservidores.dart';
 import '../../../src/models/apoio/status.dart';
 import '../../../src/models/interfaces/apoio/status_interface.dart';
 import 'package:uno/uno.dart';
 
 class StatusApi implements StatusDAO {
-  final uriREST = Uri.parse('https://apialugueis.herokuapp.com/status');
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis + '/status');
 
   @override
   Future<List<Status>> find() async {
@@ -24,7 +25,7 @@ class StatusApi implements StatusDAO {
 
   StatusApi(this.uno);
   Future<List<Status>> fetchStatus() async {
-    final response = await uno.get('https://apialugueis.herokuapp.com/Status');
+    final response = await uno.get(NomeServidoresApi.Api_Alugueis + '/Status');
     final lista = response.data as List;
     final listaStatus = lista.map((e) => Status.fromMap(e)).toList();
     return listaStatus;
@@ -32,7 +33,7 @@ class StatusApi implements StatusDAO {
 
   @override
   remove(id) async {
-    var uri = Uri.parse('https://apialugueis.herokuapp.com/status/$id');
+    var uri = Uri.parse(NomeServidoresApi.Api_Alugueis + '/status/$id');
     var resposta = await http.delete(uri);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
   }
