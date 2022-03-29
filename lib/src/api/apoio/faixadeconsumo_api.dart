@@ -20,9 +20,9 @@ class FaixadeconsumoApi implements FaixadeconsumoInterface {
               denominacao: faixadeconsumo['denominacao'],
               faixainicial: faixadeconsumo['faixainicial'].toString(),
               faixafinal: faixadeconsumo['faixafinal'].toString(),
-              tarifaagua: faixadeconsumo['tarifaagua'],
-              tarifaesgoto: faixadeconsumo['tarifaesgoto'],
-              tfdi: faixadeconsumo['tfdi'],
+              tarifaagua: double.tryParse(faixadeconsumo['tarifaagua']),
+              tarifaesgoto: double.tryParse(faixadeconsumo['tarifaesgoto']),
+              tfdi: double.tryParse(faixadeconsumo['tfdi']),
               idimovel: faixadeconsumo['idimovel'].toString(),
             )));
     return listFaixadeconsumo;

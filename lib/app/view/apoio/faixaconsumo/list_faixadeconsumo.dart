@@ -77,6 +77,7 @@ class ListFaixadeconsumo extends StatelessWidget {
                     itemCount: lista.length,
                     itemBuilder: (context, i) {
                       var faixadeconsumo = lista[i];
+
                       return ListTile(
                         leading: iconCircButton(() {}),
                         title: Text(faixadeconsumo.denominacao),

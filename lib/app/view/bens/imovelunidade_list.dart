@@ -175,7 +175,7 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                           },
                           subtitle: Text('Locatário : ' + imovelunid.nome),
                           trailing: Container(
-                            width: 120,
+                            width: 144,
                             child: Row(
                               children: [
                                 iconEditButton(() {
@@ -214,7 +214,7 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                           },
                           subtitle: Text('Locatário : ' + imovelunid.nome),
                           trailing: Container(
-                            width: 120,
+                            width: 144,
                             child: Row(
                               children: [
                                 iconEditButton(() {
