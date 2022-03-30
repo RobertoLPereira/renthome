@@ -7,21 +7,16 @@ import 'package:get_it/get_it.dart';
 class LeituraaguaunidadeFormController {
   LeituraAguaUnidade leituraaguaunidade;
   var _interface = GetIt.I.get<LeituraaguaunidadeInterface>();
-  bool _idunidadeimovelIsValid;
   bool _leituraanteriorIsValid;
   bool _leituraatualIsValid;
   bool _codigomedidorIsValid;
-  bool _dataleituraIsValid;
-  bool _statusIsValid;
+
   bool _valorIsValid;
 
   bool get isValid =>
-      _idunidadeimovelIsValid &&
       _leituraanteriorIsValid &&
       _leituraatualIsValid &&
       _codigomedidorIsValid &&
-      _dataleituraIsValid &&
-      _statusIsValid &&
       _valorIsValid;
   // diferenciar novo com alteração
   LeituraaguaunidadeFormController(BuildContext context) {
@@ -52,10 +47,10 @@ class LeituraaguaunidadeFormController {
   String validateIdunidadeimovel(String idunidadeimovel) {
     try {
       validarIdunidadeimovel(idunidadeimovel);
-      _idunidadeimovelIsValid = true;
+      //_idunidadeimovelIsValid = true;
       return null;
     } catch (e) {
-      _idunidadeimovelIsValid = false;
+      //_idunidadeimovelIsValid = false;
       return e.toString();
     }
   }
@@ -96,10 +91,10 @@ class LeituraaguaunidadeFormController {
   String validateDataleitura(String dataleitura) {
     try {
       validarDataleitura(dataleitura);
-      _dataleituraIsValid = true;
+      // _dataleituraIsValid = true;
       return null;
     } catch (e) {
-      _dataleituraIsValid = false;
+      // _dataleituraIsValid = false;
       return e.toString();
     }
   }
@@ -107,10 +102,10 @@ class LeituraaguaunidadeFormController {
   String validateStatus(String status) {
     try {
       validarStatus(status);
-      _statusIsValid = true;
+      // _statusIsValid = true;
       return null;
     } catch (e) {
-      _statusIsValid = false;
+      //_statusIsValid = false;
       return e.toString();
     }
   }

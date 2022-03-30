@@ -20,7 +20,7 @@ class LeituraaguaunidadeService {
 
     validateCodigomedidor(leituraaguaunidade.codigomedidor.toString());
 
-    validateDataleitura(leituraaguaunidade.dataleitura);
+    validateDataleitura(leituraaguaunidade.dataleitura.toString());
 
     validateStatus(leituraaguaunidade.status.toString());
     validateValor(leituraaguaunidade.valor.toString());
@@ -71,7 +71,7 @@ class LeituraaguaunidadeService {
   }
 
 //dataleitura ? seja obrigat�rio, tenha no m�nimo 3 caracteres e no m�ximo 50
-  validateDataleitura(DateTime dataleitura) {
+  validateDataleitura(String dataleitura) {
     if (dataleitura == null) {
       throw new DomainLayerException('A dataleitura é obrigatória.');
     }

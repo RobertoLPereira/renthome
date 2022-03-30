@@ -173,7 +173,7 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                           onTap: () {
                             _back.goToDetails(context, imovelunid);
                           },
-                          subtitle: Text('Locatário : ' + imovelunid.nome),
+                          subtitle: Text('Morador : ' + imovelunid.nome),
                           trailing: Container(
                             width: 144,
                             child: Row(
@@ -212,7 +212,7 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                           onTap: () {
                             _back.goToDetails(context, imovelunid);
                           },
-                          subtitle: Text('Locatário : ' + imovelunid.nome),
+                          subtitle: Text('Morador : ' + imovelunid.nome),
                           trailing: Container(
                             width: 144,
                             child: Row(

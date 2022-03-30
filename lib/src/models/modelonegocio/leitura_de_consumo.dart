@@ -10,7 +10,7 @@ class LeituraDeConsumo {
   int codigomedidoragua;
   int codigomedidorluz;
   DateTime dataleituraagua;
-  DateTime dataleituraluz;
+  String dataleituraluz;
   double valor;
   int status;
   //get e set
@@ -76,8 +76,8 @@ class LeituraDeConsumo {
       'leituraatual': leituraatual,
       'codigomedidoragua': codigomedidoragua,
       'codigomedidorluz': codigomedidorluz,
-      'dataleituraagua': dataleituraagua.millisecondsSinceEpoch,
-      'dataleituraluz': dataleituraluz.millisecondsSinceEpoch,
+      'dataleituraagua': dataleituraagua,
+      'dataleituraluz': dataleituraluz,
       'valor': valor,
       'status': status,
     };
@@ -91,10 +91,8 @@ class LeituraDeConsumo {
       leituraatual: map['leituraatual']?.toDouble() ?? 0.0,
       codigomedidoragua: map['codigomedidoragua']?.toInt() ?? 0,
       codigomedidorluz: map['codigomedidorluz']?.toInt() ?? 0,
-      dataleituraagua:
-          DateTime.fromMillisecondsSinceEpoch(map['dataleituraagua']),
-      dataleituraluz:
-          DateTime.fromMillisecondsSinceEpoch(map['dataleituraluz']),
+      dataleituraagua: (map['dataleituraagua']),
+      dataleituraluz: (map['dataleituraluz']),
       valor: map['valor']?.toDouble() ?? 0.0,
       status: map['status']?.toInt() ?? 0,
     );

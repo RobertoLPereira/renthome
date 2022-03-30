@@ -23,7 +23,7 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeDAO {
               leituraanterior: leituraaguaunidade['leituraanterior'].toString(),
               leituraatual: leituraaguaunidade['leituraatual'].toString(),
               codigomedidor: leituraaguaunidade['codigomedidor'].toString(),
-              dataleitura: leituraaguaunidade['dataleitura'] as DateTime,
+              dataleitura: leituraaguaunidade['dataleitura'],
               status: leituraaguaunidade['status'].toString(),
               valor: leituraaguaunidade['valor'].toString(),
             )));

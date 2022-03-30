@@ -53,17 +53,17 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeInterface {
   @override
   save(LeituraAguaUnidade leituraaguaunidade) async {
     var headers = {'Content-Type': 'application/json'};
+    print(leituraaguaunidade);
     var leituraaguaunidadeJson = jsonEncode({
-      'idleituraaguaunidade':
-          int.parse(leituraaguaunidade.idleituraaguaunidade),
-      'idunidadeimovel': int.parse(leituraaguaunidade.idunidadeimovel),
-      'leituraanterior': leituraaguaunidade.leituraanterior,
-      'leituraatual': leituraaguaunidade.leituraatual,
+      'idunidadeimovel': leituraaguaunidade.idunidadeimovel,
+      'leituraanterior': double.tryParse(leituraaguaunidade.leituraanterior),
+      'leituraatual': double.tryParse(leituraaguaunidade.leituraatual),
       'codigomedidor': int.parse(leituraaguaunidade.codigomedidor),
-      'dataleitura': leituraaguaunidade.dataleitura,
-      'status': int.parse(leituraaguaunidade.status),
-      'valor': leituraaguaunidade.valor,
+      'dataleitura': leituraaguaunidade.dataleitura.toString(),
+      //'status': int.parse(leituraaguaunidade.status),
+      'valor': double.tryParse(leituraaguaunidade.valor),
     });
+    print(leituraaguaunidadeJson);
     int statusCode = 0;
     if (leituraaguaunidade.idleituraaguaunidade == null) {
       var resposta = await http.post(uriREST,

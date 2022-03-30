@@ -174,7 +174,7 @@ class _FormLeituraUnidadeAguaState extends State<FormLeituraUnidadeAgua> {
 
   fetchStatus() async {
     //await Future.delayed(Duration(seconds: 3));
-    var url = NomeServidoresApi.Api_Alugueis + 'Status';
+    var url = NomeServidoresApi.Api_Alugueis + '/Status';
     //print('voltou situação');
     var response = await http.get(Uri.parse(url));
     //print(response.body);
@@ -192,7 +192,7 @@ class _FormLeituraUnidadeAguaState extends State<FormLeituraUnidadeAgua> {
 
   fetchUnidadeImovel() async {
     var url = NomeServidoresApi.Api_Alugueis +
-        'Consultar/select iu.idunidade,iu.descricao from imovelunidade iu';
+        '/Consultar/select iu.idunidade,iu.descricao from imovelunidade iu';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
@@ -236,7 +236,6 @@ class _FormLeituraUnidadeAguaState extends State<FormLeituraUnidadeAgua> {
               fieldCodigomedidor(_back),
               fieldDataleitura(_back),
               fieldValor(_back),
-              fieldStatus(_back),
             ],
           ),
         ),
