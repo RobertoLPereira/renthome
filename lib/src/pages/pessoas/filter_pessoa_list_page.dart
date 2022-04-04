@@ -57,15 +57,14 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
 
   Widget iconEditButton(Function onPressed) {
     return IconButton(
-      icon: Icon(Icons.edit),
-      color: Colors.orange,
-      onPressed: onPressed,
-    );
+        icon: Icon(Icons.edit), color: Colors.orange, onPressed: onPressed);
   }
 
   Widget iconPagtoButton(Function onPressed) {
     return IconButton(
-        icon: Icon(Icons.money_sharp), color: Colors.green, onPressed: () {});
+        icon: Icon(Icons.money_sharp),
+        color: Colors.green,
+        onPressed: onPressed);
   }
 
   Widget iconListarPgButton(Function onPressed) {
@@ -158,6 +157,7 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                 itemCount: pessoas.length,
                 itemBuilder: (context, index) {
                   final pessoa = pessoas[index];
+
                   if (pessoa.proprietario == null) {
                     proprietario = false;
                   } else {
@@ -172,14 +172,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                     pg = pessoa.pago;
                   }
                   ativo = pessoa.status;
-                  if (pessoa.proprietario) {
+
+                  if (pessoa.idcontrato > 0) {
+                    return buildWrapPessoas(pessoa);
+                  } else if (pessoa.proprietario) {
                     return buildPessoasProp(pessoa);
                   } else {
-                    if (pessoa.idcontrato == 0) {
-                      return buildPessoasContato(pessoa);
-                    } else {
-                      return buildPessoasWrap(pessoa);
-                    }
+                    return buildPessoasContato(pessoa);
                   }
                 },
               ),
@@ -191,10 +190,10 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
   Widget buildSearch() => SearchWidget(
         text: query,
         hintText: 'Nome ou Telefone',
-        onChanged: searchPessoasWrap,
+        onChanged: searchWrapPessoas,
       );
 
-  Future searchPessoasWrap(String query) async => debounce(() async {
+  Future searchWrapPessoas(String query) async => debounce(() async {
         if (pessoas.length < 1) {
           pessoas = await WrapPessoasApi.getPessoasWrap(query);
           wpessoas = pessoas;
@@ -209,7 +208,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
         });
       });
 
-  Widget buildPessoasWrap(WrapPessoas pessoa) => ListTile(
+  Widget buildWrapPessoas(WrapPessoas pessoa) => ListTile(
+        /*leading: Image.network(
+          pessoa.urlAvatar,
+          fit: BoxFit.cover,
+          width: 50,
+          height: 50,
+        ),*/
         leading: CircleAvatar(
           backgroundColor: Colors.grey.shade300,
           child: Text(pessoa.nome.substring(0, 1)),
@@ -226,6 +231,13 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
               iconEditButton(() {
                 goToForm(context, pessoa);
               }),
+              iconPagtoButton(() {
+                if (int.parse(pessoa.pago) > 0) {
+                  goToListaPagamentos(context, pessoa);
+                } else {
+                  goToFormPagto(context, pessoa);
+                }
+              }),
               iconDelAtivButton(() {
                 if (pessoa.status == 1) {
                   remove(pessoa.idpessoa, context);
@@ -240,7 +252,6 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
           ),
         ),
       );
-  //Widget para novos cadastros que não possuem locação e que não seja proprietario
   Widget buildPessoasContato(WrapPessoas pessoa) => ListTile(
         /*leading: Image.network(
           pessoa.urlAvatar,
@@ -293,15 +304,15 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
               iconEditButton(() {
                 goToForm(context, pessoa);
               }),
+              iconImovelButton(() {
+                goToImovel(context, pessoa);
+              }),
               iconDelAtivButton(() {
                 if (pessoa.status == 1) {
                   remove(pessoa.idpessoa, context);
                 } else {
                   reativar(pessoa.idpessoa, context);
                 }
-              }),
-              iconImovelButton(() {
-                goToImovel(context, pessoa);
               }),
             ],
           ),
