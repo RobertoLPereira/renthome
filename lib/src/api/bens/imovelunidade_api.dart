@@ -11,7 +11,7 @@ class ImovelunidadeApi implements ImovelUnidadeInterface {
 
   @override
   Future<List<UnidadeImovel>> find() async {
-    print(uriREST);
+    //print(uriREST);
     var resposta = await http.get(uriREST);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
     //print(resposta.body);
@@ -29,6 +29,7 @@ class ImovelunidadeApi implements ImovelUnidadeInterface {
               nomeimovel: imovelunidade['nomeimovel'],
               idproprietario: imovelunidade['idproprietario'],
               situacaoimovel: imovelunidade['situacaoimovel'],
+              idleituraaguaunidade: imovelunidade['idleituraaguaunidade'],
             )));
     return listImovelunidade;
   }

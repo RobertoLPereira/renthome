@@ -53,7 +53,7 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeInterface {
   @override
   save(LeituraAguaUnidade leituraaguaunidade) async {
     var headers = {'Content-Type': 'application/json'};
-    print(leituraaguaunidade);
+    //print(leituraaguaunidade);
     var leituraaguaunidadeJson = jsonEncode({
       'idunidadeimovel': leituraaguaunidade.idunidadeimovel,
       'leituraanterior': double.tryParse(leituraaguaunidade.leituraanterior),
@@ -63,7 +63,7 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeInterface {
       //'status': int.parse(leituraaguaunidade.status),
       'valor': double.tryParse(leituraaguaunidade.valor),
     });
-    print(leituraaguaunidadeJson);
+    //print(leituraaguaunidadeJson);
     int statusCode = 0;
     if (leituraaguaunidade.idleituraaguaunidade == null) {
       var resposta = await http.post(uriREST,
@@ -76,5 +76,16 @@ class LeituraaguaunidadeApi implements LeituraaguaunidadeInterface {
     }
     if (statusCode != 200 && statusCode != 204)
       throw Exception('Erro REST API.');
+  }
+
+  @override
+  Future<LeituraAguaUnidade> findId(id) async {
+    final response =
+        await uno.get(NomeServidoresApi.Api_Alugueis + '/LeiturasUnidade/$id');
+    print(response.data);
+    final consumo = response.data;
+    final consumow = consumo.map((e) => LeituraAguaUnidade.fromMap(e));
+
+    return consumow;
   }
 }

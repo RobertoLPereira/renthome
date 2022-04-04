@@ -11,6 +11,7 @@ class ImovelUnidadeList extends StatefulWidget {
 class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
   final _back = ImovelUnidadeListBack();
   var pg = "0";
+  var idleitura = 0;
   var ativo = 1;
   CircleAvatar circleAvatar(String url) {
     //print('url = $url');
@@ -42,11 +43,19 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
   }
 
   Widget iconManterConsumoButton(Function onPressed) {
-    return IconButton(
-        icon: Icon(Icons.money),
-        color: Colors.orange,
-        tooltip: 'Registrar consumo',
-        onPressed: onPressed);
+    if (idleitura > 0) {
+      return IconButton(
+          icon: Icon(Icons.money),
+          color: Colors.greenAccent,
+          tooltip: 'Corrigir consumo',
+          onPressed: onPressed);
+    } else {
+      return IconButton(
+          icon: Icon(Icons.money),
+          color: Colors.orange,
+          tooltip: 'Registrar consumo',
+          onPressed: onPressed);
+    }
   }
 
   Widget iconPagtoButton(Function onPressed) {
@@ -162,6 +171,7 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                       var imovelunid = lista[i];
                       //print(imovelunid);
                       ativo = int.parse(imovelunid.status);
+                      idleitura = imovelunid.idleituraaguaunidade;
                       // print(imovelunid.nome + ' = ' + imovelunid.idlocatario);
                       if (int.parse(imovelunid.idlocatario) == 0) {
                         return ListTile(
@@ -224,7 +234,13 @@ class _ImovelUnidadeListState extends State<ImovelUnidadeList> {
                                   _back.remove(imovelunid.idunidade, context);
                                 }),
                                 iconManterConsumoButton(() {
-                                  _back.goToManterConsumo(context, imovelunid);
+                                  if (imovelunid.idleituraaguaunidade > 0) {
+                                    _back.goToEditarConsumo(
+                                        context, imovelunid);
+                                  } else {
+                                    _back.goToManterConsumo(
+                                        context, imovelunid);
+                                  }
                                 })
                               ],
                             ),

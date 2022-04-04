@@ -27,6 +27,9 @@ class LeituraDeConsumoFormBack {
   LeituraDeConsumoFormBack(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
     consumo = (parameter == null) ? LeituraDeConsumo() : parameter;
+    if (consumo.idleituraaguaunidade > 0) {
+      print('buscar dados do consumo');
+    }
   }
 
   //salvar

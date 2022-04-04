@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Constants.kSecondaryColor,
             primarySwatch: Colors.blue,
             canvasColor: Constants.kPrimaryColor),
-        home: BoasVindas(), //WidgetTree(),
+        home: BoasVindas(), //HomePage(), //WidgetTree(),
         routes: Map.fromEntries(demos.map((d) => MapEntry(d.route, d.builder))),
       ),
     );

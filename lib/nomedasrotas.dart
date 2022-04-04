@@ -9,7 +9,7 @@ class NomedasRotas {
   static const NATRELACDET = '/detail-naturezarelac';
   static const NATRELACFORM = '/form-naturezarelac';
   static const TESTE = '/HomePage';
-  static const LEITURAAGUAUNIDADE_FORM = '/form-leituraagua';
+  static const LEITURAAGUAUNIDADE_FORM = '/Form-leituraagua';
   static const LEITURAAGUAUNIDADE_DETAILS = '/detail-leituraagua';
   static const LEITURAAGUAUNIDADE = '/Leituraaguaunidade';
   static const COMBOBOX = '/ComboBox';

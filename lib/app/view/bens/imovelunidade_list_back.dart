@@ -86,6 +86,19 @@ abstract class _ImovelUnidadeListBack with Store {
         .pushNamed(NomedasRotas.LEITURAAGUAUNIDADE_FORM, arguments: consumo);
   }
 
+  goToEditarConsumo(BuildContext context, UnidadeImovel unidade) {
+    LeituraAguaUnidade consumo = LeituraAguaUnidade();
+    consumo.idleituraaguaunidade = unidade.idleituraaguaunidade.toString();
+    consumo.idunidadeimovel = unidade.idunidade;
+    /*consumo.status = "1";
+    consumo.codigomedidor = "1234";
+    consumo.leituraanterior = "0.00";
+    consumo.leituraatual = "0.00";
+    consumo.valor = "0.00";*/
+    Navigator.of(context)
+        .pushNamed(NomedasRotas.LEITURAAGUAUNIDADE_FORM, arguments: consumo);
+  }
+
   remove(dynamic id, BuildContext context) async {
     await _service.remove(id);
     refreshList();

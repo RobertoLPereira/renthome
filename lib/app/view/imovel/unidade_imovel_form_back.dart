@@ -15,6 +15,9 @@ class UnidadeImovelFormBack {
   UnidadeImovelFormBack(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
     unid = (parameter == null) ? UnidadeImovel() : parameter;
+    if (unid.idleituraaguaunidade > 0) {
+      print('buscardados do consumo');
+    }
   }
   save(BuildContext context) async {
     print(unid);

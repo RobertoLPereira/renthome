@@ -13,17 +13,18 @@ class ImovelUnidadeRestApi implements ImovelUnidadeInterface {
   Future<List<UnidadeImovel>> find() async {
     var resposta = await http.get(uriREST);
     if (resposta.statusCode != 200) throw Exception('Erro REST API.');
+    print('voltei');
     Iterable listDart = json.decode(resposta.body);
-    var listImovel =
-        List<UnidadeImovel>.from(listDart.map((imovel) => UnidadeImovel(
-              idimovel: imovel['idimovel'],
-              descricao: imovel['descricao'],
-              idunidade: imovel['idunidade'],
-              idlocatario: imovel['idlocatario'],
-              status: imovel['status'],
-              idimovelcategoria: imovel['idimovelcategoria'],
-              nomeimovel: imovel['nomeimovel'],
-            )));
+    var listImovel = List<UnidadeImovel>.from(listDart.map((imovel) =>
+        UnidadeImovel(
+            idimovel: imovel['idimovel'],
+            descricao: imovel['descricao'],
+            idunidade: imovel['idunidade'],
+            idlocatario: imovel['idlocatario'],
+            status: imovel['status'],
+            idimovelcategoria: imovel['idimovelcategoria'],
+            nomeimovel: imovel['nomeimovel'],
+            idleituraaguaunidade: imovel['idleituraaguaunidade'])));
     return listImovel;
   }
 
@@ -31,6 +32,7 @@ class ImovelUnidadeRestApi implements ImovelUnidadeInterface {
 
   ImovelUnidadeRestApi(this.uno);
   Future<List<Imovelunidade>> fetchImovel() async {
+    print('é aki');
     final response =
         await uno.get(NomeServidoresApi.Api_Alugueis + '/Imovelunidade');
     final lista = response.data as List;

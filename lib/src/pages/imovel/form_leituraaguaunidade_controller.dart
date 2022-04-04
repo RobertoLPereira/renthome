@@ -22,12 +22,20 @@ class LeituraaguaunidadeFormController {
   LeituraaguaunidadeFormController(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
     leituraaguaunidade = (parameter == null) ? LeituraAguaUnidade() : parameter;
+    if (int.parse(leituraaguaunidade.idleituraaguaunidade) > 0) {
+      print('buscar');
+      buscar(int.parse(leituraaguaunidade.idleituraaguaunidade));
+    }
+  }
+  //buscar consumo
+  buscar(id) async {
+    leituraaguaunidade = await _interface
+        .findId(int.parse(leituraaguaunidade.idleituraaguaunidade));
+    print(leituraaguaunidade);
   }
 
   //salvar
   save(BuildContext context) async {
-    print('salvar form_leituraaguaunidade');
-    print(leituraaguaunidade);
     await _interface.save(leituraaguaunidade);
     Navigator.of(context).pop();
   }

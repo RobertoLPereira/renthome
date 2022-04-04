@@ -12,6 +12,8 @@ class UnidadeImovel {
   int idproprietario;
   int situacaoimovel;
   String nome;
+  int idleituraaguaunidade;
+
   UnidadeImovel({
     this.idunidade,
     this.idimovel,
@@ -24,6 +26,7 @@ class UnidadeImovel {
     this.idproprietario,
     this.situacaoimovel,
     this.nome,
+    this.idleituraaguaunidade,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +41,8 @@ class UnidadeImovel {
       'endereco': endereco,
       'idproprietario': idproprietario,
       'situacaoimovel': situacaoimovel,
-      'nome': nome
+      'nome': nome,
+      'idleituraaguaunidade': idleituraaguaunidade
     };
   }
 
@@ -55,6 +59,7 @@ class UnidadeImovel {
       idproprietario: map['idproprietario'],
       situacaoimovel: map['situacaoimovel'],
       nome: map['nome'],
+      idleituraaguaunidade: map['idleituraaguaunidade'],
     );
   }
 
@@ -65,6 +70,6 @@ class UnidadeImovel {
   @override
   @override
   String toString() {
-    return 'UnidadeImovel(idunidade: $idunidade, idimovel: $idimovel, idlocatario: $idlocatario, descricao: $descricao, status: $status, idimovelcategoria: $idimovelcategoria, nomeimovel: $nomeimovel, endereco: $endereco, idproprietario: $idproprietario, situacaoimovel: $situacaoimovel, nome: $nome)';
+    return 'UnidadeImovel(idunidade: $idunidade, idimovel: $idimovel, idlocatario: $idlocatario, descricao: $descricao, status: $status, idimovelcategoria: $idimovelcategoria, nomeimovel: $nomeimovel, endereco: $endereco, idproprietario: $idproprietario, situacaoimovel: $situacaoimovel, nome: $nome,idleituraaguaunidade:$idleituraaguaunidade)';
   }
 }
