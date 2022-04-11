@@ -166,6 +166,9 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                   if (pessoa.telefone == null) {
                     pessoa.telefone = 'Não Informado';
                   }
+                  if (pessoa.unidade != null) {
+                    pessoa.telefone += '-' + pessoa.unidade;
+                  }
                   if (pessoa.pago == null) {
                     pg = 0 as String;
                   } else {
