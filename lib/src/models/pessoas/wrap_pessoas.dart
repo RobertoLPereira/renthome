@@ -49,29 +49,31 @@ class WrapPessoas {
       this.pago});
 
   WrapPessoas.fromJson(Map<String, dynamic> json) {
-    idcontrato = json['idcontrato'];
-    idunidadeimovel = json['idunidadeimovel'];
-    idlocador = json['idlocador'];
-    idlocatario = json['idlocatario'];
-    diavencimento = json['diavencimento'];
-    datacontrato = json['datacontrato'];
-    statuscontrato = json['statuscontrato'];
-    validadecontrato = json['validadecontrato'];
-    valor = json['valor'];
-    taxacondominio = json['taxacondominio'];
-    valordecaucao = json['valordecaucao'];
-    idpessoa = json['idpessoa'];
-    nome = json['nome'];
-    telefone = json['telefone'];
-    proprietario = json['proprietario'];
-    cadastradoem = json['cadastradoem'];
-    status = json['status'];
-    urlAvatar = json['url_avatar'];
-    email = json['email'];
-    unidade = json['unidade'];
-    imovel = json['imovel'];
-    enddereco = json['enddereco'];
-    pago = json['pago'];
+    if (json['nome'] != null && json['telefone'] != null) {
+      idcontrato = json['idcontrato'];
+      idunidadeimovel = json['idunidadeimovel'];
+      idlocador = json['idlocador'];
+      idlocatario = json['idlocatario'];
+      diavencimento = json['diavencimento'];
+      datacontrato = json['datacontrato'];
+      statuscontrato = json['statuscontrato'];
+      validadecontrato = json['validadecontrato'];
+      valor = json['valor'];
+      taxacondominio = json['taxacondominio'];
+      valordecaucao = json['valordecaucao'];
+      idpessoa = json['idpessoa'];
+      nome = json['nome'];
+      telefone = json['telefone'];
+      proprietario = json['proprietario'];
+      cadastradoem = json['cadastradoem'];
+      status = json['status'];
+      urlAvatar = json['url_avatar'];
+      email = json['email'];
+      unidade = json['unidade'];
+      imovel = json['imovel'];
+      enddereco = json['enddereco'];
+      pago = json['pago'];
+    }
   }
 
   Map<String, dynamic> toJson() {

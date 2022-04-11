@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
@@ -47,6 +49,61 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
   final _passwordController = TextEditingController();
   var mask = MaskTextInputFormatter(mask: '##(##) # ####-####');
   FormData formData = FormData();
+  bool isLoading = false;
+  int idimovel = 1;
+  List<dynamic> imovel = [];
+  final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis +
+      '/Consultar/select * from imovel where status=1 order by descricao');
+  @override
+  void initState() {
+    super.initState();
+    this.fetchImovel();
+  }
+
+  fetchImovel() async {
+    var response = await http.get(uriREST);
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        imovel = items;
+        isLoading = true;
+      });
+    } else {
+      imovel = [];
+      isLoading = false;
+    }
+  }
+
+  Widget fieldProp() {
+    return DropdownButtonHideUnderline(
+      child: ButtonTheme(
+        alignedDropdown: true,
+        child: DropdownButton<String>(
+          value: idimovel.toString(),
+          iconSize: 30,
+          icon: (null),
+          borderRadius: BorderRadius.horizontal(),
+          style: TextStyle(
+            color: Colors.black54,
+            fontSize: 16,
+          ),
+          hint: Text('Selecione o Proprietário'),
+          onChanged: (String newValue) {
+            setState(() {
+              idimovel = int.parse(newValue);
+            });
+          },
+          items: imovel?.map((item) {
+                return new DropdownMenuItem(
+                  child: new Text(item['descricao']),
+                  value: item['idimovel'].toString(),
+                );
+              })?.toList() ??
+              [],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +165,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                       formData.password = value;
                     },
                   ),
+                  fieldProp(),
                   ElevatedButton(
                     child: const Text('Sign in'),
                     onPressed: () async {
@@ -119,6 +177,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                         }
 
                         if (ok) {
+                          print('$idimovel');
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -153,6 +212,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
       textAlign: TextAlign.center,
     ),
   );
+
   Future<bool> login() async {
     print('login');
     SharedPreferences shp = await SharedPreferences.getInstance();

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:renthome/src/api/pessoas/wrap_pessoas_api.dart';
 import 'package:renthome/src/models/bens/imovelWrap.dart';
+import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 import 'package:renthome/src/widgets/serach_widget.dart';
 
@@ -166,13 +167,15 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
                   if (pessoa.telefone == null) {
                     pessoa.telefone = 'Não Informado';
                   }
+                  if (pessoa.unidade != null) {
+                    pessoa.telefone += '-' + pessoa.unidade;
+                  }
                   if (pessoa.pago == null) {
                     pg = 0 as String;
                   } else {
                     pg = pessoa.pago;
                   }
                   ativo = pessoa.status;
-
                   if (pessoa.idcontrato > 0) {
                     return buildWrapPessoas(pessoa);
                   } else if (pessoa.proprietario) {
@@ -324,6 +327,32 @@ class FilterPessoasListPageState extends State<FilterPessoasListPage> {
   void remove(int idpessoa, BuildContext context) {}
 
   void goToFormPagto(BuildContext context, WrapPessoas pessoa) {
+    PessoasWrap pes = new PessoasWrap();
+    //print(pessoa.toJson());
+    pes.idcontrato = pes.idcontrato;
+    pes.idunidadeimovel = pes.idunidadeimovel;
+    pes.idlocador = pes.idlocador;
+    pes.idlocatario = pes.idlocatario;
+    pes.diavencimento = pes.diavencimento;
+    pes.datacontrato = pes.datacontrato;
+    pes.statuscontrato = pes.statuscontrato;
+    pes.validadecontrato = pes.validadecontrato;
+    pes.valor = pes.valor;
+    pes.taxacondominio = pes.taxacondominio;
+    pes.valordecaucao = pes.valordecaucao;
+    pes.idpessoa = pes.idpessoa;
+    pes.nome = pes.nome;
+    pes.telefone = pes.telefone;
+    pes.proprietario = pes.proprietario;
+    pes.cadastradoem = pes.cadastradoem;
+    pes.status = pes.status;
+    pes.urlAvatar = pes.urlAvatar;
+    pes.email = pes.email;
+    pes.unidade = pes.unidade;
+    pes.imovel = pes.imovel;
+    pes.enddereco = pes.enddereco;
+    pes.pago = pes.pago;
+
     Navigator.of(context).pushNamed('/Pagamentos', arguments: pessoa);
   }
 
