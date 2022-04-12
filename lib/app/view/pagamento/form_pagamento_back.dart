@@ -1,24 +1,24 @@
 import 'package:renthome/app/domain/services/pagamento_service.dart';
 import 'package:renthome/src/models/pagamento/pagamentos.dart';
-import 'package:renthome/src/models/pessoas/pessoas_wrap.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 
 class FormPagamentoBack {
-  PessoasWrap pessoa;
+  WrapPessoas pessoa;
   Pagamentos pagto;
   var _service = GetIt.I.get<PagamentoService>();
-  bool _contratoValid;
-  bool _dataValid;
+  // bool _contratoValid;
+  //bool _dataValid;
   bool _valorValid;
 
-  bool get isValid => _contratoValid && _dataValid && _valorValid;
-
+  //bool get isValid => _contratoValid && _dataValid && _valorValid;
+  bool get isValid => _valorValid;
   // diferenciar novo com alteração
   FormPagamentoBack(BuildContext context) {
     var parameter = ModalRoute.of(context).settings.arguments;
     //print(parameter);
-    pessoa = (parameter == null) ? PessoasWrap() : parameter;
+    pessoa = (parameter == null) ? WrapPessoas() : parameter;
   }
 
   //salvar
@@ -42,10 +42,10 @@ class FormPagamentoBack {
   String validateContrato(int idcontrato) {
     try {
       _service.validateContrato(idcontrato);
-      _contratoValid = true;
+      //_contratoValid = true;
       return null;
     } catch (e) {
-      _contratoValid = false;
+      //_contratoValid = false;
       return e.toString();
     }
   }
@@ -64,10 +64,10 @@ class FormPagamentoBack {
   String validateData(String datapg) {
     try {
       _service.validateDataPgto(datapg);
-      _dataValid = true;
+      //_dataValid = true;
       return null;
     } catch (e) {
-      _dataValid = false;
+      //_dataValid = false;
       return e.toString();
     }
   }

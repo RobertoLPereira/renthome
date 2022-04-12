@@ -43,7 +43,7 @@ class _FormPagamentoState extends State<FormPagamento> {
     //var mask = MaskTextInputFormatter(mask: '###,##');
     return TextFormField(
         validator: back.validateValorPagar,
-        onSaved: (newValue) => back.pessoa.valor = newValue as int,
+        onSaved: (newValue) => back.pessoa.valor = double.tryParse(newValue),
         initialValue: back.pessoa.valor.toString(),
         //inputFormatters: [mask],
         keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -81,10 +81,8 @@ class _FormPagamentoState extends State<FormPagamento> {
           IconButton(
               icon: Icon(Icons.save),
               onPressed: () {
+                _form.currentState.validate();
                 _form.currentState.save();
-                _back.save(context);
-                //_form.currentState.validate();
-                //_form.currentState.save();
                 if (_back.isValid) {
                   _back.save(context);
                 }

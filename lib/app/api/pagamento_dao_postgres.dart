@@ -38,11 +38,10 @@ class PagamentoDAOPostgres implements PagamentoDAO {
 
   @override
   save(Pagamentos Pagto) async {
-    //print('cheguei na api');
+    print('cheguei na api');
     print(Pagto);
     var headers = {'Content-Type': 'application/json'};
     var PagtoJson = jsonEncode({
-      'idpagamento': Pagto.idpagamento,
       'datapagamento': Pagto.datapagamento,
       'valorpago': Pagto.valorpago,
       'juros': Pagto.juros,
