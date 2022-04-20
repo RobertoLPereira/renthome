@@ -51,7 +51,7 @@ class ImovelFormController {
       for (int i = 1; i <= imovelwrap.qtdunidade; i++) {
         unid.descricao = imovelwrap.nomeunidade + ' Nº ' + i.toString();
         unid.idimovel = idimovel.toString();
-        unid.idimovelcategoria = "1";
+        unid.idimovelcategoria = imovelwrap.idimovelcategoria as String;
         unid.idlocatario = "0";
         _serviceUnid.save(unid);
       }

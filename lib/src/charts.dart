@@ -136,7 +136,9 @@ class PieChart2State extends State {
                 pctpgemdia = pctatraso;
                 pctpgemdia = pctpgemdia - pctalemdia;
               }
-
+              //define 2 casas decimais
+              pctpgemdia = pctpgemdia.toStringAsFixed(2);
+              pctpgemdia = double.tryParse(pctpgemdia);
               isLoading = false;
             });
           } else {
