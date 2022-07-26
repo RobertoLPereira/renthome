@@ -106,7 +106,7 @@ class PieChart2State extends State {
     try {
       setState(() async {
         var url = NomeServidoresApi.Api_Alugueis +
-            '/Consultar/select * from "vw_dashboard_perc"';
+            '/Consultar/select * from public.vw_dashboard_perc';
         try {
           var response = await http.get(Uri.tryParse(url));
           if (response.statusCode == 200) {

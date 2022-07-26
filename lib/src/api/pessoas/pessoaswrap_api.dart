@@ -11,7 +11,7 @@ import 'package:uno/uno.dart';
 
 class PessoasWrapApi implements PessoasWrapDAO {
   final uriREST = Uri.parse(NomeServidoresApi.Api_Alugueis +
-      '/Consultar/select * from  "vw_listacontatosWrap"');
+      '/Consultar/select * from  public.vw_listacontatosWrap');
 
   @override
   Future<List<PessoasWrap>> find() async {
@@ -59,7 +59,7 @@ class PessoasWrapApi implements PessoasWrapDAO {
   PessoasWrapApi(this.uno);
   Future<List<PessoasWrap>> fetchPessoasWrap() async {
     final response = await uno.get(NomeServidoresApi.Api_Alugueis +
-        '/Consultar/ select * from  "vw_listacontatosWrap"');
+        '/Consultar/ select * from  public.vw_listacontatosWrap');
     final lista = response.data as List;
     print('api');
     print(response.data.toString());

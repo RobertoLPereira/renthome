@@ -13,9 +13,9 @@ const String getQuantidadeimoveis = """
    FROM public.imovel i""";
 //consulta faixa de consumo
 const String getFaixadeconsumo =
-    """select iu.idlocatario,iu.descricao,p.nome,fc.* from imovelunidade iu
-left join pessoas p on p.idpessoa=iu.idlocatario
-left join faixadeconsumo fc on fc.idcategoriadeimoveis=iu.idimovelcategoria""";
+    """select iu.idlocatario,iu.descricao,p.nome,fc.* from public.imovelunidade iu
+left join public.pessoas p on p.idpessoa=iu.idlocatario
+left join public.faixadeconsumo fc on fc.idcategoriadeimoveis=iu.idimovelcategoria""";
 //vw_alugueis_emdia
 const String vw_alugueis_emdia =
     //Centro de custo
@@ -62,34 +62,34 @@ const String vw_quantidade_imoveis = """
           WHERE (iu.idimovel = i.idimovel)) AS unidades
    FROM public.imovel i""";
 const String vw_unidadepagadora = """ 
-  select c.*,un.*,im.* from contrato c 
-left join imovelunidade un on un.idlocatario=c.idlocatario
-left join imovel im on im.idimovel = un.idimovel
+  select c.*,un.*,im.* from public.contrato c 
+left join public.imovelunidade un on un.idlocatario=c.idlocatario
+left join public.imovel im on im.idimovel = un.idimovel
 """;
 const String vw_listacontatos = """ 
   select p.*,c.*,iu.descricao as unidade,
-  (select im.descricao as imovel from imovel im where im.idimovel=iu.idimovel) ,
-  (select im.endereco as enddereco from imovel im where im.idimovel=iu.idimovel) 
-  from pessoas p 
-  left join contrato c on p.idpessoa=c.idlocatario
-  left join imovelunidade iu on iu.idlocatario=c.idlocatario""";
+  (select im.descricao as imovel from public.imovel im where im.idimovel=iu.idimovel) ,
+  (select im.endereco as enddereco from public.imovel im where im.idimovel=iu.idimovel) 
+  from public.pessoas p 
+  left join public.contrato c on p.idpessoa=c.idlocatario
+  left join public.imovelunidade iu on iu.idlocatario=c.idlocatario""";
 
 const String vw_listacontatosWrap = """ 
   select c.*,p.*,iu.descricao as unidade,
-    (select im.descricao as imovel from imovel im where im.idimovel=iu.idimovel) ,
-    (select im.endereco as enddereco from imovel im where im.idimovel=iu.idimovel) ,
-    (select count(*) from pagamentos p where (((c.idcontrato = p.idcontrato) AND 
+    (select im.descricao as imovel from public.imovel im where im.idimovel=iu.idimovel) ,
+    (select im.endereco as enddereco from public.imovel im where im.idimovel=iu.idimovel) ,
+    (select count(*) from public.pagamentos p where (((c.idcontrato = p.idcontrato) AND 
   	(( SELECT date_part('Year'::text, p.datapagamento) ) = (date_part('Year'::text, CURRENT_DATE) ) 
   	AND (( SELECT date_part('Month'::text, p.datapagamento)) = ( SELECT date_part('Month'::text, CURRENT_DATE) )))))
   	) as pago
-    from pessoas p   
-    left join contrato c on p.idpessoa=c.idlocatario
-  left join imovelunidade iu on iu.idlocatario=c.idlocatario
+    from public.pessoas p   
+    left join public.contrato c on p.idpessoa=c.idlocatario
+  left join public.imovelunidade iu on iu.idlocatario=c.idlocatario
 """;
 const String vw_pagamentosPessoa = """select pg.*,p.*,c.idlocatario 
-from pagamentos pg left join  contrato c on c.idcontrato=pg.idcontrato 
-left join pessoas p on p.idpessoa=c.idlocatario """;
+from public.pagamentos pg left join  public.contrato c on c.idcontrato=pg.idcontrato 
+left join public.pessoas p on p.idpessoa=c.idlocatario """;
 const String vw_imoveilWrap =
-    """select i.*,p.*,c.denominacao as categoria from imovel i left join pessoas p
-     on p.idpessoa = i.idproprietario left join categoriadeimoveis c 
+    """select i.*,p.*,c.denominacao as categoria from public.imovel i left join public.pessoas p
+     on p.idpessoa = i.idproprietario left join public.categoriadeimoveis c 
      on c.idcategoriadeimoveis=i.idimovelcategoria """;

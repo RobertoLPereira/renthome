@@ -2,22 +2,22 @@
 const String vw_dashboard = """ SELECT COALESCE(count(*), 0::bigint) AS ativos,
     COALESCE(sum(c.valor), 0::double precision) AS valortotalcontrato,
     COALESCE(( SELECT count(*) AS inativos
-           FROM contrato ci
+           FROM public.contrato ci
           WHERE ci.status > 1), 0::bigint) AS inativos,
     COALESCE(( SELECT sum(c_1.valor) AS vencidos
-           FROM contrato c_1
+           FROM public.contrato c_1
           WHERE c_1.diavencimento::double precision < (( SELECT date_part('Day'::text, CURRENT_DATE) AS date_part)) AND (EXISTS ( SELECT NULL::text AS text
-                   FROM pagamentos p
+                   FROM public.pagamentos p
                   WHERE (( SELECT date_part('Month'::text, p.datapagamento) AS date_part)) = (( SELECT date_part('Month'::text, CURRENT_DATE) AS date_part))))), 0::double precision) AS vencidos,
     COALESCE(( SELECT sum(p.valorpago - p.desconto) AS pagosematraso
-           FROM contrato c_1
-             JOIN pagamentos p ON c_1.idcontrato = p.idcontrato AND (( SELECT date_part('Day'::text, p.datapagamento) AS date_part)) > c_1.diavencimento::double precision AND (( SELECT date_part('Month'::text, p.datapagamento) AS date_part)) = (( SELECT date_part('Month'::text, CURRENT_DATE) AS mesatu))), 0::double precision) AS pagosematraso,
+           FROM public.contrato c_1
+             JOIN public.pagamentos p ON c_1.idcontrato = p.idcontrato AND (( SELECT date_part('Day'::text, p.datapagamento) AS date_part)) > c_1.diavencimento::double precision AND (( SELECT date_part('Month'::text, p.datapagamento) AS date_part)) = (( SELECT date_part('Month'::text, CURRENT_DATE) AS mesatu))), 0::double precision) AS pagosematraso,
     COALESCE(( SELECT sum(c_1.valor) AS pagosnovencimento
-           FROM contrato c_1
-             JOIN pagamentos p ON c_1.idcontrato = p.idcontrato AND (( SELECT date_part('Day'::text, p.datapagamento) AS date_part)) <= c_1.diavencimento::double precision AND (( SELECT date_part('Month'::text, p.datapagamento) AS date_part)) = (( SELECT date_part('Month'::text, CURRENT_DATE) AS date_part))), 0::double precision) AS pagosnovencimento,
+           FROM public.contrato c_1
+             JOIN public.pagamentos p ON c_1.idcontrato = p.idcontrato AND (( SELECT date_part('Day'::text, p.datapagamento) AS date_part)) <= c_1.diavencimento::double precision AND (( SELECT date_part('Month'::text, p.datapagamento) AS date_part)) = (( SELECT date_part('Month'::text, CURRENT_DATE) AS date_part))), 0::double precision) AS pagosnovencimento,
     COALESCE(( SELECT sum(p.valorpago) AS sum
-           FROM pagamentos p
+           FROM public.pagamentos p
           WHERE COALESCE(( SELECT date_part('Month'::text, p.datapagamento) AS date_part), 0::double precision) = COALESCE(( SELECT date_part('Month'::text, CURRENT_DATE) AS date_part), 0::double precision)), 0::double precision) AS emdia
-   FROM contrato c
+   FROM public.contrato c
   WHERE c.status = 1;
 """;

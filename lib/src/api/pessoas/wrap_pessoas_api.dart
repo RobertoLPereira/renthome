@@ -11,7 +11,7 @@ import 'package:renthome/src/models/pessoas/wrap_pessoas.dart';
 
 class WrapPessoasApi {
   static const Api_Alugueis = NomeServidoresApi.Api_Alugueis +
-      '/Consultar/Select * from "vw_listacontatosWrap"';
+      '/Consultar/Select * from public.vw_listacontatosWrap';
 
   static Future<List<WrapPessoas>> getPessoasWrap(String query) async {
     var resposta = await http.get(Uri.parse(Api_Alugueis));

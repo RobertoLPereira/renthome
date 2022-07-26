@@ -33,7 +33,7 @@ class _PanelLeftPageState extends State<PanelLeftPage> {
     try {
       setState(() async {
         var url = NomeServidoresApi.Api_Alugueis +
-            '/Consultar/select * from "vw_unidades_em_dia_mescorrente"';
+            '/Consultar/select * from public.vw_unidades_em_dia_mescorrente';
         try {
           var response = await http.get(Uri.tryParse(url));
 

@@ -11,7 +11,7 @@ class PessoaService {
   Future<List<Pessoas>> fetchPessoas() async {
     //final response = await uno.get(NomeServidoresApi.Api_Alugueis +'/Pessoas');
     var response = await uno.get(NomeServidoresApi.Api_Alugueis +
-        '/Consultar/select * from "vw_listacontatosWrap"');
+        '/Consultar/select * from public.vw_listacontatosWrap');
     final lista = response.data as List;
     final listaPessoas = lista.map((e) => Pessoas.fromMap(e)).toList();
     return listaPessoas;
@@ -20,7 +20,7 @@ class PessoaService {
   Future<List<WrapPessoas>> wrapPessoas() async {
     Uno uno;
     var response = await uno.get(NomeServidoresApi.Api_Alugueis +
-        '/Consultar/select * from "vw_listacontatosWrap"');
+        '/Consultar/select * from public.vw_listacontatosWrap');
     final lista = response.data as List;
     final listaPessoas = lista.map((e) => WrapPessoas.fromJson(e)).toList();
     return listaPessoas;

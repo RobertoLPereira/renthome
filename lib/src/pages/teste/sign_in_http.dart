@@ -115,7 +115,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
         key: _formkey,
         child: Scrollbar(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -159,7 +159,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                     decoration: const InputDecoration(
                         filled: true,
                         labelText: 'Password',
-                        hintText: '(99) 9 9999-9999'),
+                        hintText: '(99) 99999-9999'),
                     obscureText: true,
                     onChanged: (value) {
                       formData.password = value;
@@ -223,7 +223,8 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
         .replaceAll("-", "");
     var result = await http.get(
         Uri.parse(NomeServidoresApi.Api_Alugueis + '/ValidarLogin/' + tel));
-    if (result.statusCode == 204) {
+    print(result.body);
+    if (result.statusCode == 200) {
       _showDialog('Successfully signed in.');
       await shp.setString('Token', tel);
       return true;
